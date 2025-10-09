@@ -1,13 +1,14 @@
-import { Router, Request, Response } from "express";
-import {
-  UptimeKumaHeartbeatResponse,
-  UptimeKumaPageResponse,
-} from "./Heatbeat";
+import { json } from '@sveltejs/kit';
 
-const router = Router();
+export async function GET() {
+	return json({
+		name: 'Uptime Kuma'
+	});
+}
 
-router.get("/", async (req: Request, res: Response) => {
-  const statusPage = "default";
+/*
+
+ const statusPage = "default";
 
   const response = await fetch(
     "https://status.nashor.cloud:6002/api/status-page/heartbeat/" + statusPage
@@ -28,6 +29,5 @@ router.get("/", async (req: Request, res: Response) => {
   res.json({
     uptimePercentage: uptimePercentage.toFixed(3),
   });
-});
 
-export default router;
+*/
