@@ -1,0 +1,36 @@
+widgets:
+  - type: link
+    url: https://google.com
+    icon: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+    title: Google # optional
+    subtitle: Search the web # optional
+
+  - type: link
+    url: https://google.com
+    icon: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+    ping: true
+    successIs: [200]
+    allowSelfSigned: false
+
+  # Data Widgets
+  - type: datawidget
+    static: true
+    size: 1x1
+    title: RAM
+    subtitle: 16 GB
+
+  # Default data source
+  - type: datawidget
+    title: CPU
+    size: 1x1 | 2x1
+    static: false
+    dataType: none | progressbar | linechart | barchart | tilefill | statusHistory
+    dataSource: system.cpu | system.ram | system.disk | system.network
+
+  # Example for plugin data source
+  - type: datawidget
+    title: CPU
+    size: 1x1 | 2x1
+    static: false
+    dataType: none | progressbar | linechart | barchart | tilefill | statusHistory
+    dataSource: plugin.pihole | plugin.docker

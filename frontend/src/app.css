@@ -1,0 +1,32 @@
+:root {
+	--primaryText: hsl(0, 0%, 90%);
+	--secondaryText: hsl(0, 0%, 60%);
+	--backgroundDark: hsl(0, 0%, 0%);
+	--background: hsl(0, 0%, 5%);
+	--backgroundLight: hsl(0, 0%, 10%);
+
+	--borderColor: hsl(0, 0%, 15%);
+
+	--success: hsl(108, 60%, 57%);
+	--successSecondary: hsl(108, 60%, 57%, 50%);
+
+	--warning: hsl(39, 100%, 50%);
+	--warningSecondary: hsl(39, 100%, 50%, 50%);
+
+	--error: hsl(0, 80%, 60%);
+	--errorSecondary: hsl(0, 80%, 60%, 50%);
+
+	--cellSize: 128px;
+	--cellGap: 1rem;
+}
+
+:root {
+	background-color: var(--background);
+	color: var(--primaryText);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
