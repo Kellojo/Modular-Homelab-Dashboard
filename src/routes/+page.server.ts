@@ -1,10 +1,10 @@
-import { json, error } from '@sveltejs/kit';
-import getConfig from '../config';
+import getConfig from './api/config';
+import { error } from '@sveltejs/kit';
 
-export async function GET() {
+export async function load() {
 	try {
 		const data = await getConfig();
-		return json(data);
+		return data;
 	} catch (e) {
 		console.error('Error reading dashboard.yaml:', e);
 		if (e instanceof Error) return error(500, e.message);

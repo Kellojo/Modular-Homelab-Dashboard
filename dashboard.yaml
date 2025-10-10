@@ -1,4 +1,11 @@
+plugins:
+  uptimekuma:
+    url: https://status.nashor.cloud:6002/
+
 widgets:
+  - type: title
+    title: System Status
+
   - type: link
     url: https://google.com
     icon: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
@@ -13,24 +20,21 @@ widgets:
     allowSelfSigned: false
 
   # Data Widgets
-  - type: datawidget
-    static: true
-    size: 1x1
-    title: RAM
-    subtitle: 16 GB
+  #- type: datawidget
+  #  static: true
+  #  title: RAM
+  #  subtitle: 16 GB
 
-  # Default data source
   - type: datawidget
+    subtype: fill
     title: CPU
-    size: 1x1 | 2x1
     static: false
-    dataType: none | progressbar | linechart | barchart | tilefill | statusHistory
-    dataSource: system.cpu | system.ram | system.disk | system.network
+    datasource: system
+    datapoint: cpu.load
 
   # Example for plugin data source
-  - type: datawidget
-    title: CPU
-    size: 1x1 | 2x1
-    static: false
-    dataType: none | progressbar | linechart | barchart | tilefill | statusHistory
-    dataSource: plugin.pihole | plugin.docker
+  #- type: datawidget
+  #  title: CPU
+  #  static: false
+  #  dataType: none | progressbar | linechart | barchart | fill | statusHistory
+  #  datasource: plugin.pihole | plugin.docker

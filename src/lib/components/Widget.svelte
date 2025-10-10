@@ -1,8 +1,10 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	let { title = '', subtitle = '', width = 1, height = 1, content } = $props();
+
 	const MAX_WIDTH = 2;
 	const MAX_HEIGHT = 3;
-	let { title = '', subtitle = '', width = 1, height = 1 } = $props();
-
 	width = Math.min(width, MAX_WIDTH);
 	width = Math.max(width, 1);
 	height = Math.min(height, MAX_HEIGHT);
@@ -12,6 +14,10 @@
 <div class="widget" style="grid-column: span {width}; grid-row: span {height};">
 	<h3>{title}</h3>
 	<p>{subtitle}</p>
+
+	{#if content}
+		<div class="content">{@render content()}</div>
+	{/if}
 </div>
 
 <style>
@@ -23,6 +29,9 @@
 		padding: 1rem;
 
 		cursor: pointer;
+
+		position: relative;
+		overflow: hidden;
 	}
 
 	h3 {

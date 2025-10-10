@@ -1,31 +1,40 @@
-<script>
+<script lang="ts">
 	import Widget from '$lib/components/Widget.svelte';
 	import WidgetGrid from '$lib/components/WidgetGrid.svelte';
 	import WidgetTitle from '$lib/components/WidgetTitle.svelte';
+	import FillWidget from '$lib/components/datawidgets/FillWidget.svelte';
+	import type { WidgetData } from './api/config.js';
+
+	const { data } = $props();
+
+	const components = {
+		title: WidgetTitle,
+		link: Widget,
+		datawidget: {
+			fill: FillWidget
+		}
+	};
+
+	function getComponent(widget: WidgetData) {
+		if (widget.type === 'datawidget' && widget.subtype) {
+			return components[widget.type][widget.subtype] || null;
+		}
+		return components[widget.type] || null;
+	}
 </script>
 
 <div class="page">
 	<div class="header"></div>
 
 	<WidgetGrid>
-		<WidgetTitle title="System Info" />
-
-		<Widget title="CPU" subtitle="5%" />
-		<Widget title="Widget 2" subtitle="This is widget 2" width={2} height={2} />
-		<Widget title="Widget 3" subtitle="This is widget 3" />
-		<Widget title="Widget 4" subtitle="This is widget 4" />
-		<Widget title="Widget 5" subtitle="This is widget 5" />
-		<Widget title="Widget 6" subtitle="This is widget 6" />
-		<Widget title="Widget 6" subtitle="This is widget 6" />
-		<Widget title="Widget 6" subtitle="This is widget 6" />
-		<Widget title="Widget 1" subtitle="This is widget 1" />
-		<Widget title="Widget 2" subtitle="This is widget 2" />
-		<Widget title="Widget 3" subtitle="This is widget 3" />
-		<Widget title="Widget 4" subtitle="This is widget 4" />
-		<Widget title="Widget 5" subtitle="This is widget 5" />
-		<Widget title="Widget 6" subtitle="This is widget 6" />
-		<Widget title="Widget 6" subtitle="This is widget 6" />
-		<Widget title="Widget 6" subtitle="This is widget 6" />
+		{#each data.widgets as widget}
+			{#if getComponent(widget)}
+				{@const Comp = getComponent(widget)}
+				<Comp {...widget} />
+			{:else}
+				<p class="text-red-500">Unknown widget: {widget.type}</p>
+			{/if}
+		{/each}
 	</WidgetGrid>
 </div>
 
