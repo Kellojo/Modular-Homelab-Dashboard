@@ -10,7 +10,7 @@
 	let classification = $state(ValueState.Unknown);
 
 	async function pullData(datasource: string, datapoint: string) {
-		const response = await fetch(`/api/plugins/${datasource}`);
+		const response = await fetch(`/api/plugins/${datasource}?datapoint=${datapoint}`);
 		const data = await response.json();
 
 		const dataPoint: DataWidgetValue = getProperty(data, datapoint);

@@ -31,6 +31,7 @@ widgets:
     static: false
     datasource: system
     datapoint: cpu.load
+    width: 2
 
   - type: datawidget
     subtype: fill
@@ -52,6 +53,39 @@ widgets:
     static: false
     datasource: system
     datapoint: memory
+    width: 2
+
+  - type: datawidget
+    subtype: fill
+    title: Disk
+    static: false
+    datasource: system
+    datapoint: disk
+    width: 2
+
+  - type: datawidget
+    subtype: fill
+    title: Traffic
+    static: false
+    datasource: system
+    datapoint: network.traffic
+    width: 1
+
+  - type: datawidget
+    subtype: fill
+    title: Up
+    static: false
+    datasource: system
+    datapoint: network.totalUp
+    width: 1
+
+  - type: datawidget
+    subtype: fill
+    title: Down
+    static: false
+    datasource: system
+    datapoint: network.totalDown
+    width: 1
 
   # Example for plugin data source
   #- type: datawidget

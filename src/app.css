@@ -3,6 +3,7 @@
 	--secondaryText: hsl(0, 0%, 60%);
 	--backgroundDark: hsl(0, 0%, 0%);
 	--background: hsl(0, 0%, 5%);
+	--backgroundTextContrastShadow: hsl(0, 0%, 5%, 25%);
 	--backgroundLight: hsl(0, 0%, 10%);
 
 	--borderColor: hsl(0, 0%, 15%);

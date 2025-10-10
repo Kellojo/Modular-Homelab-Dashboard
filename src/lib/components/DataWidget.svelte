@@ -4,12 +4,23 @@
 	let { refreshData, content, refreshInterval = 2000, datasource, datapoint, ...props } = $props();
 
 	$effect(() => {
-		const id = setInterval(() => {
-			refreshData(datasource, datapoint);
-		}, refreshInterval);
+		let active = true;
+		async function poll() {
+			while (active) {
+				await pullData(); // wait for pullData to finish
+				await new Promise((resolve) => setTimeout(resolve, refreshInterval));
+			}
+		}
+		poll();
 
-		return () => clearInterval(id);
+		return () => {
+			active = false;
+		};
 	});
+
+	function pullData() {
+		refreshData(datasource, datapoint);
+	}
 </script>
 
 <Widget {...props} {content}></Widget>

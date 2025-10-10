@@ -67,5 +67,13 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		overflow: hidden;
+
+		text-shadow: 0 0 2px var(--backgroundTextContrastShadow);
+
+		position: relative;
+	}
+
+	* {
+		z-index: 1;
 	}
 </style>
