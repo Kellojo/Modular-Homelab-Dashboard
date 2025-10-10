@@ -4,20 +4,47 @@ plugins:
 
 widgets:
   - type: title
+    title: Apps
+
+  - type: link
+    url: https://vaultwarden.nashor.cloud:6002/
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/bitwarden.png
+    title: Vaultwarden
+    subtitle: Password Manager
+
+  - type: link
+    url: https://vaultwarden.nashor.cloud:6002/
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/synology.png
+    title: Synology NAS
+    subtitle: Disk Station Manager
+
+  - type: link
+    url: https://git.nashor.cloud:6002/
+    title: Git
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/git.png
+
+  - type: link
+    url: https://pihole.nashor.cloud:6002/admin
+    title: Pi-hole
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pi-hole.png
+
+  - type: link
+    url: https://status.nashor.cloud:6002/
+    title: Uptime Kuma
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/uptime-kuma.png
+
+  - type: link
+    url: https://portainer.nashor.cloud:6002
+    title: Portainer
+
+  - type: link
+    url: https://homebridge.nashor.cloud:6002
+    title: Homebridge
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homebridge.png
+    width: 2
+
+  - type: title
     title: System Status
-
-  - type: link
-    url: https://google.com
-    icon: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
-    title: Google # optional
-    subtitle: Search the web # optional
-
-  - type: link
-    url: https://google.com
-    icon: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
-    ping: true
-    successIs: [200]
-    allowSelfSigned: false
 
   # Data Widgets
   #- type: datawidget
@@ -64,7 +91,7 @@ widgets:
     width: 2
 
   - type: datawidget
-    subtype: fill
+    subtype: text
     title: Traffic
     static: false
     datasource: system
@@ -72,7 +99,7 @@ widgets:
     width: 1
 
   - type: datawidget
-    subtype: fill
+    subtype: text
     title: Up
     static: false
     datasource: system
@@ -80,7 +107,7 @@ widgets:
     width: 1
 
   - type: datawidget
-    subtype: fill
+    subtype: text
     title: Down
     static: false
     datasource: system

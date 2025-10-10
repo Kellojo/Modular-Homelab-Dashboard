@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DataWidgetValue } from '../../../routes/api/plugins/system/+server';
+	import type { FillDataWidgetValue } from '../../../routes/api/types/DataWidgetValueTypes';
 	import { ValueState } from '../../../routes/api/types/valueState';
 	import DataWidget from '../DataWidget.svelte';
 	import { getProperty } from 'dot-prop';
@@ -9,17 +9,13 @@
 	let subtitle = $state(props.subtitle || '-');
 	let classification = $state(ValueState.Unknown);
 
-	async function pullData(datasource: string, datapoint: string) {
-		const response = await fetch(`/api/plugins/${datasource}?datapoint=${datapoint}`);
-		const data = await response.json();
+	function applyResults(data: FillDataWidgetValue) {
+		subtitle = props.subtitle || data.displayValue;
+		classification = data.classification || ValueState.Unknown;
 
-		const dataPoint: DataWidgetValue = getProperty(data, datapoint);
-		subtitle = props.subtitle || dataPoint.displayValue;
-		classification = dataPoint.classification || ValueState.Unknown;
-
-		const value = dataPoint.value as number;
-		const min = dataPoint.min || 0;
-		const max = dataPoint.max || 100;
+		const value = data.value as number;
+		const min = data.min || 0;
+		const max = data.max || 100;
 		fill = Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100);
 	}
 </script>
@@ -28,7 +24,7 @@
 	<div class={['fill', classification]} style="--fill-level: {fill}%"></div>
 {/snippet}
 
-<DataWidget {...props} {subtitle} refreshData={pullData} {content}></DataWidget>
+<DataWidget {...props} {subtitle} {applyResults} {content}></DataWidget>
 
 <style>
 	.fill {

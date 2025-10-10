@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	let { title = '', subtitle = '', width = 1, height = 1, content, url = '' } = $props();
+	let { title = '', subtitle = '', width = 1, height = 1, content, url = '', icon } = $props();
 
 	const MAX_WIDTH = 2;
 	const MAX_HEIGHT = 3;
@@ -25,8 +25,18 @@
 	role="button"
 	tabindex={url ? 0 : -1}
 >
-	<h3>{title}</h3>
-	<p>{subtitle}</p>
+	{#if title}
+		<div class="title">
+			{#if icon}
+				<img src={icon} alt="Icon" />
+			{/if}
+			<h3>{title}</h3>
+		</div>
+	{/if}
+
+	{#if subtitle}
+		<p>{subtitle}</p>
+	{/if}
 
 	{#if content}
 		<div class="content">{@render content()}</div>
@@ -47,12 +57,25 @@
 		overflow: hidden;
 	}
 
+	.title {
+		display: inline;
+		gap: 0.5rem;
+		margin-bottom: 0.25rem;
+
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		img {
+			max-width: 2rem;
+			max-height: 2rem;
+		}
+	}
+
 	h3 {
 		color: var(--primaryText);
 		font-size: 1rem;
 		margin: 0;
-
-		margin-bottom: 0.25rem;
 	}
 
 	p {

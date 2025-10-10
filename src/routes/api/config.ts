@@ -51,5 +51,9 @@ export enum WidgetType {
 }
 
 export enum WidgetSubType {
-	fill = 'fill'
+	text = 'text',
+	fill = 'fill',
+	progressbar = 'progressbar',
+	line = 'line',
+	monitor = 'monitor'
 }

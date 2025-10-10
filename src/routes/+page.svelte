@@ -1,16 +1,19 @@
 <script lang="ts">
+	import LinkWidget from '$lib/components/LinkWidget.svelte';
 	import Widget from '$lib/components/Widget.svelte';
 	import WidgetGrid from '$lib/components/WidgetGrid.svelte';
 	import WidgetTitle from '$lib/components/WidgetTitle.svelte';
 	import FillWidget from '$lib/components/datawidgets/FillWidget.svelte';
+	import TextDataWidget from '$lib/components/datawidgets/TextDataWidget.svelte';
 	import type { WidgetData } from './api/config.js';
 
 	const { data } = $props();
 
 	const components = {
 		title: WidgetTitle,
-		link: Widget,
+		link: LinkWidget,
 		datawidget: {
+			text: TextDataWidget,
 			fill: FillWidget
 		}
 	};

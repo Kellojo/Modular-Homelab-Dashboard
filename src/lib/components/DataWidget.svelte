@@ -1,13 +1,21 @@
 <script lang="ts">
 	import Widget from './Widget.svelte';
 
-	let { refreshData, content, refreshInterval = 2000, datasource, datapoint, ...props } = $props();
+	let { applyResults, content, refreshInterval = 5000, datasource, datapoint, ...props } = $props();
 
 	$effect(() => {
 		let active = true;
 		async function poll() {
 			while (active) {
-				await pullData(); // wait for pullData to finish
+				try {
+					const response = await fetch(
+						`/api/plugins/${datasource}/${datapoint.replaceAll('.', '/')}`
+					);
+					const data = await response.json();
+
+					await applyResults(data);
+				} catch (error) {}
+
 				await new Promise((resolve) => setTimeout(resolve, refreshInterval));
 			}
 		}
@@ -17,10 +25,6 @@
 			active = false;
 		};
 	});
-
-	function pullData() {
-		refreshData(datasource, datapoint);
-	}
 </script>
 
 <Widget {...props} {content}></Widget>
