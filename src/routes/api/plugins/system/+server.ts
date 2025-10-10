@@ -13,20 +13,39 @@ export async function GET() {
 
 	const response: SystemResponse = {
 		cpu: {
-			temperature: cpuTemperature.main,
-			currentSpeed: cpuCurrentSpeed.avg,
+			temperature: {
+				value: cpuTemperature.main || 0,
+				classification: getValueState(cpuTemperature.main || 0, { warning: 70, error: 90 }),
+				unit: '°C',
+				displayValue: `${cpuTemperature.main?.toFixed(1) || 'N/A'} °C`,
+				min: 0,
+				max: 100
+			},
+			currentSpeed: {
+				value: cpuCurrentSpeed.avg,
+				classification: ValueState.Success,
+				unit: 'GHz',
+				displayValue: `${cpuCurrentSpeed.avg.toFixed(2)} GHz`,
+				min: cpuCurrentSpeed.min,
+				max: cpuCurrentSpeed.max
+			},
 			load: {
 				value: cpuCurrentLoad.currentLoad,
 				classification: getValueState(cpuCurrentLoad.currentLoad, { warning: 50, error: 80 }),
 				unit: '%',
-				displayValue: `${cpuCurrentLoad.currentLoad.toFixed(1)}%`
+				displayValue: `${cpuCurrentLoad.currentLoad.toFixed(1)}%`,
+				min: 0,
+				max: 100
 			}
 		},
 
 		memory: {
-			total: filesize(mem.total),
-			free: filesize(mem.free),
-			used: filesize(mem.used)
+			displayValue: `${filesize(mem.used)} / ${filesize(mem.total)}`,
+			value: (mem.used / mem.total) * 100,
+			classification: getValueState((mem.used / mem.total) * 100, { warning: 70, error: 90 }),
+			unit: '%',
+			min: 0,
+			max: 100
 		}
 	};
 
@@ -34,8 +53,8 @@ export async function GET() {
 }
 
 export interface SystemResponse {
-	cpu: { temperature: number | null; currentSpeed: number; load: DataWidgetValue };
-	memory: { total: string; free: string; used: string };
+	cpu: { temperature: DataWidgetValue; currentSpeed: DataWidgetValue; load: DataWidgetValue };
+	memory: DataWidgetValue;
 }
 
 export interface DataWidgetValue {
@@ -43,4 +62,6 @@ export interface DataWidgetValue {
 	value: number | string;
 	classification: ValueState;
 	unit: string;
+	min?: number;
+	max?: number;
 }

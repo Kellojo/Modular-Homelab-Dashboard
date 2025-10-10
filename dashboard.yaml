@@ -32,6 +32,27 @@ widgets:
     datasource: system
     datapoint: cpu.load
 
+  - type: datawidget
+    subtype: fill
+    title: CPU
+    static: false
+    datasource: system
+    datapoint: cpu.currentSpeed
+
+  - type: datawidget
+    subtype: fill
+    title: CPU
+    static: false
+    datasource: system
+    datapoint: cpu.temperature
+
+  - type: datawidget
+    subtype: fill
+    title: RAM
+    static: false
+    datasource: system
+    datapoint: memory
+
   # Example for plugin data source
   #- type: datawidget
   #  title: CPU

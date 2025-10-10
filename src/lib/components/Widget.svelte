@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	let { title = '', subtitle = '', width = 1, height = 1, content } = $props();
+	let { title = '', subtitle = '', width = 1, height = 1, content, url = '' } = $props();
 
 	const MAX_WIDTH = 2;
 	const MAX_HEIGHT = 3;
@@ -9,9 +9,22 @@
 	width = Math.max(width, 1);
 	height = Math.min(height, MAX_HEIGHT);
 	height = Math.max(height, 1);
+
+	function onclick() {
+		if (url) {
+			window.open(url, '_blank', 'noopener,noreferrer');
+		}
+	}
 </script>
 
-<div class="widget" style="grid-column: span {width}; grid-row: span {height};">
+<div
+	class="widget"
+	style="grid-column: span {width}; grid-row: span {height};"
+	{onclick}
+	onkeydown={(e) => e.key === 'Enter' && onclick()}
+	role="button"
+	tabindex={url ? 0 : -1}
+>
 	<h3>{title}</h3>
 	<p>{subtitle}</p>
 

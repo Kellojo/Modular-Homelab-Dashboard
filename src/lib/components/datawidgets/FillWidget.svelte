@@ -10,15 +10,17 @@
 	let classification = $state(ValueState.Unknown);
 
 	async function pullData(datasource: string, datapoint: string) {
-		console.log(`Pulling data from ${datasource} for ${datapoint}`);
-		const response = await fetch(`/api/plugins/${datasource}?datapoint=${datapoint}`);
+		const response = await fetch(`/api/plugins/${datasource}`);
 		const data = await response.json();
 
 		const dataPoint: DataWidgetValue = getProperty(data, datapoint);
-		const value = dataPoint.value as number;
-		fill = value;
 		subtitle = props.subtitle || dataPoint.displayValue;
 		classification = dataPoint.classification || ValueState.Unknown;
+
+		const value = dataPoint.value as number;
+		const min = dataPoint.min || 0;
+		const max = dataPoint.max || 100;
+		fill = Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100);
 	}
 </script>
 
