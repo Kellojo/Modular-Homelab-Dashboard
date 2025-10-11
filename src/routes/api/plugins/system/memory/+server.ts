@@ -1,14 +1,9 @@
-import { filesize } from 'filesize';
-import { getValueState } from '../../../types/valueState';
 import * as si from 'systeminformation';
-import { json } from '@sveltejs/kit';
-import type { FillDataWidgetValue } from '../../../types/DataWidgetValueTypes';
+import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import { filesize } from 'filesize';
+import { getValueState } from '$lib/types/valueState';
 
-export async function GET() {
-	return json(await getMemoryStatus());
-}
-
-async function getMemoryStatus(): Promise<FillDataWidgetValue> {
+export const GET = createWidgetEndpoint('system/memory', async () => {
 	const mem = await si.mem();
 	return {
 		displayValue: `${filesize(mem.used, {
@@ -22,4 +17,4 @@ async function getMemoryStatus(): Promise<FillDataWidgetValue> {
 		min: 0,
 		max: 100
 	};
-}
+});

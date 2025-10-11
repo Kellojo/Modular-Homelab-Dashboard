@@ -55,12 +55,15 @@
 
 		position: relative;
 		overflow: hidden;
+
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 	}
 
 	.title {
 		display: inline;
 		gap: 0.5rem;
-		margin-bottom: 0.25rem;
 
 		display: flex;
 		flex-direction: row;

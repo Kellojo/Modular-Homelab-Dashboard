@@ -1,4 +1,4 @@
-import getConfig from './api/config';
+import getConfig from '../lib/server/Config';
 import { error } from '@sveltejs/kit';
 
 export async function load() {

@@ -1,13 +1,8 @@
-import { getValueState, ValueState } from '../../../../types/valueState';
+import { ValueState } from '../../../../../../lib/types/valueState';
 import * as si from 'systeminformation';
-import { json } from '@sveltejs/kit';
-import type { FillDataWidgetValue } from '../../../../types/DataWidgetValueTypes';
+import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 
-export async function GET() {
-	return json(await getCpuSpeed());
-}
-
-async function getCpuSpeed(): Promise<FillDataWidgetValue> {
+export const GET = createWidgetEndpoint('system/cpu/currentSpeed', async () => {
 	const cpuCurrentSpeed = await si.cpuCurrentSpeed();
 	return {
 		value: cpuCurrentSpeed.avg,
@@ -17,4 +12,4 @@ async function getCpuSpeed(): Promise<FillDataWidgetValue> {
 		min: cpuCurrentSpeed.min,
 		max: cpuCurrentSpeed.max
 	};
-}
+});

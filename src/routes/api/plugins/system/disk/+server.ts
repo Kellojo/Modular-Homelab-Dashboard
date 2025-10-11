@@ -1,14 +1,9 @@
-import { filesize } from 'filesize';
-import { getValueState } from '../../../types/valueState';
 import * as si from 'systeminformation';
-import { json } from '@sveltejs/kit';
-import type { FillDataWidgetValue } from '../../../types/DataWidgetValueTypes';
+import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import { filesize } from 'filesize';
+import { getValueState } from '$lib/types/valueState';
 
-export async function GET() {
-	return json(await getDiskStatus());
-}
-
-async function getDiskStatus(): Promise<FillDataWidgetValue> {
+export const GET = createWidgetEndpoint('system/disk', async () => {
 	const fsSize = await si.fsSize();
 	const used = fsSize.reduce((acc, curr) => acc + curr.used, 0);
 	const size = fsSize.reduce((acc, curr) => acc + curr.size, 0);
@@ -25,4 +20,4 @@ async function getDiskStatus(): Promise<FillDataWidgetValue> {
 		min: 0,
 		max: 100
 	};
-}
+});

@@ -14,7 +14,9 @@
 					const data = await response.json();
 
 					await applyResults(data);
-				} catch (error) {}
+				} catch (error) {
+					console.error('Error fetching data for widget:', error);
+				}
 
 				await new Promise((resolve) => setTimeout(resolve, refreshInterval));
 			}

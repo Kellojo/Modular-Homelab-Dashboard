@@ -1,11 +1,11 @@
 <script lang="ts">
 	import LinkWidget from '$lib/components/LinkWidget.svelte';
-	import Widget from '$lib/components/Widget.svelte';
 	import WidgetGrid from '$lib/components/WidgetGrid.svelte';
 	import WidgetTitle from '$lib/components/WidgetTitle.svelte';
 	import FillWidget from '$lib/components/datawidgets/FillWidget.svelte';
+	import StatusHistoryDataWidget from '$lib/components/datawidgets/StatusHistoryDataWidget.svelte';
 	import TextDataWidget from '$lib/components/datawidgets/TextDataWidget.svelte';
-	import type { WidgetData } from './api/config.js';
+	import type { WidgetData } from '../lib/server/Config.js';
 
 	const { data } = $props();
 
@@ -14,7 +14,8 @@
 		link: LinkWidget,
 		datawidget: {
 			text: TextDataWidget,
-			fill: FillWidget
+			fill: FillWidget,
+			statushistory: StatusHistoryDataWidget
 		}
 	};
 

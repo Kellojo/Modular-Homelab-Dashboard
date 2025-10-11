@@ -1,13 +1,8 @@
-import { getValueState } from '../../../../types/valueState';
+import { getValueState } from '../../../../../../lib/types/valueState';
 import * as si from 'systeminformation';
-import { json } from '@sveltejs/kit';
-import type { FillDataWidgetValue } from '../../../../types/DataWidgetValueTypes';
+import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 
-export async function GET() {
-	return json(await getCpuTemperature());
-}
-
-async function getCpuTemperature(): Promise<FillDataWidgetValue> {
+export const GET = createWidgetEndpoint('system/cpu/temperature', async () => {
 	const cpuTemperature = await si.cpuTemperature();
 	return {
 		value: cpuTemperature.main || 0,
@@ -17,4 +12,4 @@ async function getCpuTemperature(): Promise<FillDataWidgetValue> {
 		min: 0,
 		max: 100
 	};
-}
+});

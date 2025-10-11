@@ -1,14 +1,9 @@
-import { filesize } from 'filesize';
-import { getValueState, ValueState } from '../../../../types/valueState';
 import * as si from 'systeminformation';
-import { json } from '@sveltejs/kit';
-import type { TextDataWidgetValue } from '../../../../types/DataWidgetValueTypes';
+import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import { filesize } from 'filesize';
+import { ValueState } from '$lib/types/valueState';
 
-export async function GET() {
-	return json(await getNetworkStatus());
-}
-
-async function getNetworkStatus(): Promise<TextDataWidgetValue> {
+export const GET = createWidgetEndpoint('system/network/totalDown', async () => {
 	const ns = await si.networkStats('*');
 	const totalTransmitted = ns.reduce((acc, curr) => acc + curr.rx_bytes, 0);
 	const details = filesize(totalTransmitted, { round: 1, output: 'object' });
@@ -16,4 +11,4 @@ async function getNetworkStatus(): Promise<TextDataWidgetValue> {
 		displayValue: filesize(totalTransmitted, { round: 1 }),
 		classification: ValueState.Success
 	};
-}
+});

@@ -13,3 +13,8 @@ export interface FillDataWidgetValue {
 	min?: number;
 	max?: number;
 }
+
+export interface DataWidgetResponse<T> {
+	current: T;
+	history: { timestamp: Date; value: T }[];
+}

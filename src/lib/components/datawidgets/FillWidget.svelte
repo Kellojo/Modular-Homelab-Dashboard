@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { FillDataWidgetValue } from '../../../routes/api/types/DataWidgetValueTypes';
-	import { ValueState } from '../../../routes/api/types/valueState';
+	import type { DataWidgetResponse, FillDataWidgetValue } from '../../types/DataWidgetValueTypes';
+	import { ValueState } from '../../types/valueState';
 	import DataWidget from '../DataWidget.svelte';
 	import { getProperty } from 'dot-prop';
 
@@ -9,13 +9,14 @@
 	let subtitle = $state(props.subtitle || '-');
 	let classification = $state(ValueState.Unknown);
 
-	function applyResults(data: FillDataWidgetValue) {
-		subtitle = props.subtitle || data.displayValue;
-		classification = data.classification || ValueState.Unknown;
+	function applyResults(data: DataWidgetResponse<FillDataWidgetValue>) {
+		const current = data.current;
+		subtitle = props.subtitle || current.displayValue;
+		classification = current.classification || ValueState.Unknown;
 
-		const value = data.value as number;
-		const min = data.min || 0;
-		const max = data.max || 100;
+		const value = current.value as number;
+		const min = current.min || 0;
+		const max = current.max || 100;
 		fill = Math.min(Math.max(((value - min) / (max - min)) * 100, 0), 100);
 	}
 </script>

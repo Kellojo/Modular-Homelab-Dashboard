@@ -1,5 +1,5 @@
 import { json, error } from '@sveltejs/kit';
-import getConfig from '../config';
+import getConfig from '../../../lib/server/Config';
 
 export async function GET() {
 	try {

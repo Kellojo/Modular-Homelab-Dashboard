@@ -12,6 +12,7 @@ export default async function getConfig(): Promise<Config> {
 			const config = yaml.parse(data);
 			if (!config.plugins) config.plugins = {};
 			if (!config.widgets) config.widgets = [];
+			if (!config.historyLength) config.historyLength = 120;
 
 			return config;
 		} catch (e) {
@@ -27,6 +28,10 @@ export default async function getConfig(): Promise<Config> {
 }
 
 interface Config {
+	config: {
+		historyLength: number;
+	};
+
 	plugins: {
 		uptimekuma: {
 			url: string;
@@ -55,5 +60,5 @@ export enum WidgetSubType {
 	fill = 'fill',
 	progressbar = 'progressbar',
 	line = 'line',
-	monitor = 'monitor'
+	statushistory = 'statushistory'
 }

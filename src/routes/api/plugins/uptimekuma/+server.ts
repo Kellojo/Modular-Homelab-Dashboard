@@ -1,8 +1,8 @@
 import { json, error } from '@sveltejs/kit';
-import getConfig from '../../config';
+import getConfig from '../../../../lib/server/Config';
 import { URL } from 'url';
 import type { UptimeKumaHeartbeatResponse } from './types';
-import { ValueState } from '../../types/valueState';
+import { ValueState } from '../../../../lib/types/valueState';
 
 export async function GET() {
 	try {

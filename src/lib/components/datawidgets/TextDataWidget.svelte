@@ -3,7 +3,7 @@
 		DataWidgetValue,
 		TextDataWidgetValue
 	} from '../../../routes/api/plugins/system/+server';
-	import { ValueState } from '../../../routes/api/types/valueState';
+	import { ValueState } from '../../types/valueState';
 	import DataWidget from '../DataWidget.svelte';
 	import { getProperty } from 'dot-prop';
 
