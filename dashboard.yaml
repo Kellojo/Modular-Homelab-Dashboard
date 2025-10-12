@@ -1,47 +1,10 @@
 plugins:
   uptimekuma:
-    url: https://status.nashor.cloud:6002/
+    url: http://192.168.178.100:3000
 
 widgets:
   - type: title
     title: Apps
-
-  - type: link
-    url: https://vaultwarden.nashor.cloud:6002/
-    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/bitwarden.png
-    title: Vaultwarden
-    subtitle: Password Manager
-
-  - type: link
-    url: https://vaultwarden.nashor.cloud:6002/
-    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/synology.png
-    title: Synology NAS
-    subtitle: Disk Station Manager
-
-  - type: link
-    url: https://git.nashor.cloud:6002/
-    title: Git
-    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/git.png
-
-  - type: link
-    url: https://pihole.nashor.cloud:6002/admin
-    title: Pi-hole
-    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pi-hole.png
-
-  - type: link
-    url: https://status.nashor.cloud:6002/
-    title: Uptime Kuma
-    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/uptime-kuma.png
-
-  - type: link
-    url: https://portainer.nashor.cloud:6002
-    title: Portainer
-
-  - type: link
-    url: https://homebridge.nashor.cloud:6002
-    title: Homebridge
-    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homebridge.png
-    width: 2
 
   - type: title
     title: System Status
