@@ -34,7 +34,8 @@ interface Config {
 
 	plugins: {
 		uptimekuma: {
-			url: string;
+			url?: string;
+			statusPage?: string;
 		};
 	};
 

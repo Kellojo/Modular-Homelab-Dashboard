@@ -54,6 +54,13 @@ widgets:
 
   - type: datawidget
     subtype: statushistory
+    title: Status
+    static: false
+    datasource: uptimekuma
+    datapoint: uptime
+
+  - type: datawidget
+    subtype: statushistory
     title: CPU
     static: false
     datasource: system
