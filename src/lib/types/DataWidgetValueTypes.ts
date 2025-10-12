@@ -16,5 +16,10 @@ export interface FillDataWidgetValue {
 
 export interface DataWidgetResponse<T> {
 	current: T;
-	history: { timestamp: Date; value: T }[];
+	history: DataWidgetResponseHistoryPoint<T>[];
+}
+
+export interface DataWidgetResponseHistoryPoint<T> {
+	timestamp: Date;
+	value: T;
 }

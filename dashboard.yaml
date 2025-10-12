@@ -60,6 +60,13 @@ widgets:
     datapoint: cpu.load
 
   - type: datawidget
+    subtype: line
+    title: CPU
+    static: false
+    datasource: system
+    datapoint: cpu.load
+
+  - type: datawidget
     subtype: fill
     title: CPU
     static: false

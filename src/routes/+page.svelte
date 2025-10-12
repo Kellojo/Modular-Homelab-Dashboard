@@ -3,6 +3,7 @@
 	import WidgetGrid from '$lib/components/WidgetGrid.svelte';
 	import WidgetTitle from '$lib/components/WidgetTitle.svelte';
 	import FillWidget from '$lib/components/datawidgets/FillWidget.svelte';
+	import LineHistoryDataWidget from '$lib/components/datawidgets/LineHistoryDataWidget.svelte';
 	import StatusHistoryDataWidget from '$lib/components/datawidgets/StatusHistoryDataWidget.svelte';
 	import TextDataWidget from '$lib/components/datawidgets/TextDataWidget.svelte';
 	import type { WidgetData } from '../lib/server/Config.js';
@@ -15,7 +16,8 @@
 		datawidget: {
 			text: TextDataWidget,
 			fill: FillWidget,
-			statushistory: StatusHistoryDataWidget
+			statushistory: StatusHistoryDataWidget,
+			line: LineHistoryDataWidget
 		}
 	};
 

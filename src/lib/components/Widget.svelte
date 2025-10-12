@@ -45,11 +45,13 @@
 
 <style>
 	.widget {
-		border: 2px solid var(--borderColor);
+		border: 1px solid var(--borderColor);
 		border-radius: 1rem;
 
 		background-color: var(--background);
+		backdrop-filter: blur(2rem);
 		padding: 1rem;
+		box-shadow: var(--shadow-s);
 
 		cursor: pointer;
 
@@ -72,6 +74,8 @@
 		img {
 			max-width: 2rem;
 			max-height: 2rem;
+			border-radius: 0.5rem;
+			opacity: 0.9;
 		}
 	}
 
@@ -99,7 +103,14 @@
 		position: relative;
 	}
 
-	* {
+	.content {
+		flex-grow: 1;
+		display: flex;
+		align-items: end;
 		z-index: 1;
+	}
+
+	* {
+		z-index: 2;
 	}
 </style>

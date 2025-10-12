@@ -3,11 +3,11 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 
 type WidgetFetchFn = () => Promise<any>;
 class StandardWidgetDataEndpointOptions {
-	maxHistory: number = 5;
-	minHistoryIntervalSeconds: number = 30;
+	maxHistory: number = 128;
+	minHistoryIntervalSeconds: number = 0.5;
 }
 
-const historyStore = new Map<string, { timestamp: Date; value: any }[]>();
+const historyStore = new Map<string, { timestamp: Date; value: FillDataWidgetValue }[]>();
 
 /**
  * Create a reusable SvelteKit endpoint with caching & history

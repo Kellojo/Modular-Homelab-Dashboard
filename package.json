@@ -17,6 +17,7 @@
 		"@sveltejs/adapter-auto": "^6.1.0",
 		"@sveltejs/kit": "^2.43.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.0",
+		"@types/d3": "^7.4.3",
 		"@types/node": "^24.7.1",
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
@@ -26,6 +27,7 @@
 		"vite": "^7.1.7"
 	},
 	"dependencies": {
+		"d3": "^7.9.0",
 		"dot-prop": "^10.1.0",
 		"dotenv": "^17.2.3",
 		"filesize": "^11.0.13",
