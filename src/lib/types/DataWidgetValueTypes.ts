@@ -3,12 +3,14 @@ import type { ValueState } from './valueState';
 export interface TextDataWidgetValue {
 	displayValue: string;
 	classification: ValueState;
+	url?: string;
 }
 
 export interface FillDataWidgetValue {
 	displayValue: string;
 	value: number | string;
 	classification: ValueState;
+	url?: string;
 	unit: string;
 	min?: number;
 	max?: number;

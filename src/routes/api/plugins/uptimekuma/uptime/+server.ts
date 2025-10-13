@@ -2,6 +2,7 @@ import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import getConfig from '$lib/server/Config';
 import type { UptimeKumaHeartbeatResponse } from '../types';
 import { getValueStateHIB } from '$lib/types/valueState';
+import { getUptimeKumaStatusPageUrl } from '../helpers';
 
 export const GET = createWidgetEndpoint('uptimekuma/status', async () => {
 	const config = await getConfig();
@@ -23,7 +24,8 @@ export const GET = createWidgetEndpoint('uptimekuma/status', async () => {
 		displayValue: `${uptime.toFixed(1)}%`,
 		unit: '%',
 		min: 0,
-		max: 100
+		max: 100,
+		url: getUptimeKumaStatusPageUrl(baseApiUrl, statusPage)
 	};
 });
 
