@@ -29,7 +29,7 @@
 		}
 	}
 
-	@media (max-width: 480px) {
+	@media (max-width: 488px) {
 		.grid {
 			grid-template-columns: repeat(2, var(--cellSize));
 		}

@@ -79,11 +79,13 @@
 	@media (max-width: 624px) {
 		.page {
 			max-width: calc(3 * var(--cellSize) + 2 * var(--cellGap));
+			padding: 0 1rem 1rem 1rem;
 		}
 	}
-	@media (max-width: 480px) {
+	@media (max-width: 488px) {
 		.page {
 			max-width: calc(2 * var(--cellSize) + 1 * var(--cellGap));
+			padding: 0 1rem 1rem 1rem;
 		}
 	}
 </style>
