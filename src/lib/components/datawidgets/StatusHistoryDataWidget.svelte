@@ -31,6 +31,7 @@
 		flex-direction: row;
 		gap: 2px;
 		overflow: hidden;
+		justify-content: flex-end;
 	}
 
 	.historyEntry {
