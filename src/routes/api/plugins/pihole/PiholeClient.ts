@@ -119,7 +119,7 @@ interface PiholeStatsSummaryResponse {
 	queries: {
 		total: number;
 		blocked: number;
-		percentage_blocked: number;
+		percent_blocked: number;
 		unique_domains: number;
 	};
 

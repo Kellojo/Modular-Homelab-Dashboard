@@ -10,6 +10,6 @@ export const GET = createWidgetEndpoint('pihole/blocked', async () => {
 	return {
 		value: stats.queries.blocked,
 		classification: ValueState.Success,
-		displayValue: `${formatInteger(stats.queries.blocked)} blocked`
+		displayValue: `${formatInteger(stats.queries.blocked)}`
 	};
 });
