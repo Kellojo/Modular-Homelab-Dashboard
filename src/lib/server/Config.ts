@@ -9,10 +9,11 @@ export default async function getConfig(): Promise<Config> {
 		const data = await fs.promises.readFile(configPath, 'utf8');
 
 		try {
-			const config = yaml.parse(data);
+			const config: Config = yaml.parse(data);
 			if (!config.plugins) config.plugins = {};
 			if (!config.widgets) config.widgets = [];
-			if (!config.historyLength) config.historyLength = 120;
+			if (!config.config.historyLength) config.config.historyLength = 120;
+			if (!config.config.refreshCron) config.config.refreshCron = '*/10 * * * * *';
 
 			return config;
 		} catch (e) {
@@ -30,12 +31,16 @@ export default async function getConfig(): Promise<Config> {
 interface Config {
 	config: {
 		historyLength: number;
+		refreshCron: string;
 	};
 
 	plugins: {
 		uptimekuma: {
 			url?: string;
 			statusPage?: string;
+		};
+		pihole: {
+			url?: string;
 		};
 	};
 
