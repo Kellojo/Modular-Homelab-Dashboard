@@ -6,6 +6,7 @@
 	import LineHistoryDataWidget from '$lib/components/datawidgets/LineHistoryDataWidget.svelte';
 	import StatusHistoryDataWidget from '$lib/components/datawidgets/StatusHistoryDataWidget.svelte';
 	import TextDataWidget from '$lib/components/datawidgets/TextDataWidget.svelte';
+	import BarHistoryDataWidget from '$lib/components/datawidgets/BarHistoryDataWidget.svelte';
 	import type { WidgetData } from '../lib/server/Config.js';
 
 	const { data } = $props();
@@ -16,6 +17,7 @@
 		datawidget: {
 			text: TextDataWidget,
 			fill: FillWidget,
+			bar: BarHistoryDataWidget,
 			statushistory: StatusHistoryDataWidget,
 			line: LineHistoryDataWidget
 		}

@@ -1,15 +1,32 @@
 import { formatInteger } from '$lib/server/Formatter';
-import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import { createPassThroughHistoryEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
 import { PiholeClient } from '../PiholeClient';
 
-export const GET = createWidgetEndpoint('pihole/totalQueries', async () => {
+export const GET = createPassThroughHistoryEndpoint('pihole/totalQueries', async () => {
 	const piholeClient = new PiholeClient();
-	const stats = await piholeClient.getStatsSummary();
+	const stats = await piholeClient.getHistory();
 
-	return {
-		value: stats.queries.total,
-		classification: ValueState.Success,
-		displayValue: `${formatInteger(stats.queries.total)}`
+	const current = stats.history.length > 0 ? stats.history[stats.history.length - 1].total : 0;
+
+	const response: DataWidgetResponse<FillDataWidgetValue> = {
+		current: {
+			displayValue: formatInteger(current),
+			value: current,
+			classification: ValueState.Success,
+			unit: ''
+		},
+		history: stats.history.map((entry) => ({
+			timestamp: new Date(entry.timestamp * 1000),
+			value: {
+				displayValue: formatInteger(entry.total),
+				value: entry.total,
+				classification: ValueState.Success,
+				unit: ''
+			}
+		}))
 	};
+
+	return response;
 });
