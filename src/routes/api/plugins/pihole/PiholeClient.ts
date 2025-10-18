@@ -106,23 +106,20 @@ export class PiholeClient {
 		return (await response.json()) as PiholeStatsSummaryResponse;
 	}
 
-    async getHistory(): Promise<PiholeHistoryResponse> {
-        await this.authenticate();
-        const apiUrl = await this.getPiholeApiUrl('/api/history');
-        const response = await fetch(apiUrl, {
-            headers: {
-                sid: `${sid}`
-            }
-        });
+	async getHistory(): Promise<PiholeHistoryResponse> {
+		await this.authenticate();
+		const apiUrl = await this.getPiholeApiUrl('/api/history');
+		const response = await fetch(apiUrl, {
+			headers: {
+				sid: `${sid}`
+			}
+		});
 
-        if (!response.ok) {
-            throw new Error(
-                `Error fetching Pi-hole history: ${response.status} ${response.statusText}`
-            );
-        }
-        return (await response.json()) as PiholeHistoryResponse;
-    }
-
+		if (!response.ok) {
+			throw new Error(`Error fetching Pi-hole history: ${response.status} ${response.statusText}`);
+		}
+		return (await response.json()) as PiholeHistoryResponse;
+	}
 }
 
 interface PiholeAuthResponse {

@@ -7,7 +7,7 @@
 	import StatusHistoryDataWidget from '$lib/components/datawidgets/StatusHistoryDataWidget.svelte';
 	import TextDataWidget from '$lib/components/datawidgets/TextDataWidget.svelte';
 	import BarHistoryDataWidget from '$lib/components/datawidgets/BarHistoryDataWidget.svelte';
-    import ProgressWidget from '$lib/components/datawidgets/ProgressWidget.svelte';
+	import ProgressWidget from '$lib/components/datawidgets/ProgressWidget.svelte';
 	import type { WidgetData } from '../lib/server/Config.js';
 
 	const { data } = $props();
@@ -19,7 +19,7 @@
 			text: TextDataWidget,
 			fill: FillWidget,
 			bar: BarHistoryDataWidget,
-            progressbar: ProgressWidget,
+			progressbar: ProgressWidget,
 			statushistory: StatusHistoryDataWidget,
 			line: LineHistoryDataWidget
 		}
