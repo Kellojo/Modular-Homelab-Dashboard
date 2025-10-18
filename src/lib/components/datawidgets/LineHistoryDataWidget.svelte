@@ -7,13 +7,6 @@
 
 	let props = $props();
 	let subtitle = $state(props.subtitle || '-');
-	let data = [
-		{ x: 0, y: 20 },
-		{ x: 15, y: 150 },
-		{ x: 35, y: 100 },
-		{ x: 75, y: 20 },
-		{ x: 90, y: 130 }
-	];
 
 	let chart: HTMLDivElement;
 	let svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;

@@ -2,6 +2,7 @@
 	import type { DataWidgetResponse, FillDataWidgetValue } from '../../types/DataWidgetValueTypes';
 	import { ValueState } from '../../types/valueState';
 	import DataWidget from '../DataWidget.svelte';
+	import Progressbar from '../generic/Progressbar.svelte';
 
 	let props = $props();
 	let fill = $state(0);
@@ -21,7 +22,7 @@
 </script>
 
 {#snippet content()}
-	<div class={['fill', classification]} style="--fill-level: {fill}%"></div>
+	<Progressbar {fill} {classification} title={subtitle} />
 {/snippet}
 
 <DataWidget {...props} {subtitle} {applyResults} {content}></DataWidget>
