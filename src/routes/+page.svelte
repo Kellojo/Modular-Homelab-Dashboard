@@ -32,8 +32,6 @@
 </script>
 
 <div class="page">
-	<div class="header"></div>
-
 	<WidgetGrid>
 		{#each data.widgets as widget}
 			{#if getComponent(widget)}
@@ -47,16 +45,6 @@
 </div>
 
 <style>
-	.header {
-		height: 2rem;
-		margin-bottom: 1rem;
-		padding: 1rem 0;
-		width: 100%;
-
-		display: flex;
-		align-items: center;
-	}
-
 	.page {
 		display: flex;
 		flex-direction: column;
