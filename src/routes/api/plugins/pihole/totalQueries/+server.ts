@@ -8,7 +8,7 @@ export const GET = createPassThroughHistoryEndpoint('pihole/totalQueries', async
 	const piholeClient = new PiholeClient();
 	const stats = await piholeClient.getHistory();
 
-	const current = stats.history.length > 0 ? stats.history[stats.history.length - 1].total : 0;
+	const current = stats.history.reduce((res, entry) => res + entry.total, 0);
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: {

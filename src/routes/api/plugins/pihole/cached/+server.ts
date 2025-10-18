@@ -4,11 +4,11 @@ import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWid
 import { ValueState } from '$lib/types/valueState';
 import { PiholeClient } from '../PiholeClient';
 
-export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () => {
+export const GET = createPassThroughHistoryEndpoint('pihole/cached', async () => {
 	const piholeClient = new PiholeClient();
 	const stats = await piholeClient.getHistory();
 
-	const current = stats.history.reduce((res, entry) => res + entry.blocked, 0);
+	const current = stats.history.reduce((res, entry) => res + entry.cached, 0);
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: {
@@ -20,8 +20,8 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 		history: stats.history.map((entry) => ({
 			timestamp: new Date(entry.timestamp * 1000),
 			value: {
-				displayValue: formatInteger(entry.blocked),
-				value: entry.blocked,
+				displayValue: formatInteger(entry.cached),
+				value: entry.cached,
 				classification: ValueState.Success,
 				unit: ''
 			}
