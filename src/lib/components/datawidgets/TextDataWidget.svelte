@@ -3,7 +3,6 @@
 	import type { TextDataWidgetValue } from '../../../routes/api/plugins/system/+server';
 	import { ValueState } from '../../types/valueState';
 	import DataWidget from '../DataWidget.svelte';
-	import { getProperty } from 'dot-prop';
 
 	let props = $props();
 	let subtitle = $state(props.subtitle || '-');

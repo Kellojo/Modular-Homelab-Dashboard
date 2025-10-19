@@ -1,4 +1,4 @@
-import { PIHOLE_PASSWORD } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import getConfig from '$lib/server/Config';
 
 let sid: string | null = null;
@@ -26,7 +26,7 @@ export class PiholeClient {
 				const response = await fetch(authUrl, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ password: PIHOLE_PASSWORD || '' })
+					body: JSON.stringify({ password: env.PIHOLE_PASSWORD || '' })
 				});
 
 				if (!response.ok) {
