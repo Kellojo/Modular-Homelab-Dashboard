@@ -56,6 +56,7 @@
 		min-width: 0.375rem;
 		height: 100%;
 		border-radius: 0.25rem;
+		transition: height 0.2s ease-in;
 	}
 
 	.success {
