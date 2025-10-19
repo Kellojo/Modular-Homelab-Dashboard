@@ -2,18 +2,37 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'yaml';
 
+let cachedConfig: Config | null = null;
+let configFilePath: string | null = null;
+let lastModified: number | null = null;
+
 export default async function getConfig(): Promise<Config> {
 	try {
 		const cwd = process.cwd();
 		const configPath = path.resolve(cwd, 'dashboard.yaml');
+
+		// Return cached config if file hasn't changed
+		const stats = await fs.promises.stat(configPath);
+		const currentModified = stats.mtime.getTime();
+		if (cachedConfig && configPath === configFilePath && currentModified === lastModified) {
+			return cachedConfig;
+		}
+
 		const data = await fs.promises.readFile(configPath, 'utf8');
 
 		try {
 			const config: Config = yaml.parse(data);
-			if (!config.plugins) config.plugins = {};
+			if (!config.plugins) config.plugins = { uptimekuma: {}, pihole: {} };
+			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
+			if (!config.plugins.pihole) config.plugins.pihole = {};
 			if (!config.widgets) config.widgets = [];
+			if (!config.config) config.config = { historyLength: 120, refreshCron: '*/5 * * * *' };
 			if (!config.config.historyLength) config.config.historyLength = 120;
-			if (!config.config.refreshCron) config.config.refreshCron = '*/10 * * * * *';
+			if (!config.config.refreshCron) config.config.refreshCron = '*/5 * * * *';
+
+			cachedConfig = config;
+			configFilePath = configPath;
+			lastModified = currentModified;
 
 			return config;
 		} catch (e) {
@@ -26,6 +45,12 @@ export default async function getConfig(): Promise<Config> {
 			'Failed to read dashboard configuration. Could not find the dashboard.yaml file.'
 		);
 	}
+}
+
+export function clearConfigCache(): void {
+	cachedConfig = null;
+	configFilePath = null;
+	lastModified = null;
 }
 
 interface Config {
@@ -54,6 +79,8 @@ export interface WidgetData {
 	icon?: string;
 	title?: string;
 	subtitle?: string;
+	datasource?: string;
+	datapoint?: string;
 }
 
 export enum WidgetType {

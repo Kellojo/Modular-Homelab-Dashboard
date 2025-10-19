@@ -66,14 +66,4 @@
 	svg {
 		stroke: var(--success);
 	}
-
-	.success {
-		stop-color: var(--success);
-	}
-	.warning {
-		stop-color: var(--warning);
-	}
-	.error {
-		stop-color: var(--error);
-	}
 </style>

@@ -1,5 +1,5 @@
 import { formatInteger } from '$lib/server/Formatter';
-import { createPassThroughHistoryEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import { createPassThroughHistoryEndpoint } from '$lib/server/PassThroughWidgetDataEndpoint';
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
 import { PiholeClient } from '../PiholeClient';

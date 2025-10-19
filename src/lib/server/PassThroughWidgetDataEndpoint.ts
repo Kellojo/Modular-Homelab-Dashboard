@@ -1,0 +1,24 @@
+import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
+import { json, type RequestHandler } from '@sveltejs/kit';
+import {
+	StandardWidgetDataEndpointOptions,
+	type WidgetResponseFn
+} from './StandardWidgetDataEndpoint';
+
+export function createPassThroughHistoryEndpoint(
+	name: string,
+	fetchFn: WidgetResponseFn,
+	options: StandardWidgetDataEndpointOptions = new StandardWidgetDataEndpointOptions()
+): RequestHandler {
+	return async () => {
+		try {
+			const response: DataWidgetResponse<FillDataWidgetValue> = await fetchFn();
+			return json(response);
+		} catch (err: any) {
+			if (err instanceof Error) {
+				console.error(`Error in widget ${name}: ${err.message}`);
+			}
+			return json({ error: err.message }, { status: 500 });
+		}
+	};
+}

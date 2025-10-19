@@ -26,25 +26,3 @@
 {/snippet}
 
 <DataWidget {...props} {subtitle} {applyResults} {content}></DataWidget>
-
-<style>
-	.fill {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		top: calc(100% - var(--fill-level, 0));
-		background-color: transparent;
-		transition: top 0.2s ease-in;
-	}
-
-	.success {
-		background-color: var(--successSecondary);
-	}
-	.warning {
-		background-color: var(--warningSecondary);
-	}
-	.error {
-		background-color: var(--errorSecondary);
-	}
-</style>

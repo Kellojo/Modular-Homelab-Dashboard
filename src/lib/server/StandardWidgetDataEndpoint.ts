@@ -1,9 +1,9 @@
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
-type WidgetFetchFn = () => Promise<any>;
-type WidgetResponseFn = () => Promise<DataWidgetResponse<FillDataWidgetValue>>;
-class StandardWidgetDataEndpointOptions {
+export type WidgetFetchFn = () => Promise<any>;
+export type WidgetResponseFn = () => Promise<DataWidgetResponse<FillDataWidgetValue>>;
+export class StandardWidgetDataEndpointOptions {
 	maxHistory: number = 128;
 	minHistoryIntervalSeconds: number = 0.5;
 }
@@ -22,33 +22,21 @@ export function createWidgetEndpoint(
 		historyStore.set(name, []);
 	}
 
-	return async () => {
+	return async ({ url }) => {
+		const addToHistory: boolean = url.searchParams.get('addToHistory') === 'true';
+
 		try {
 			const current = await fetchFn();
 
-			addHistoryEntry(name, options, current);
+			if (addToHistory) {
+				addHistoryEntry(name, options, current);
+			}
 			const history = historyStore.get(name)!;
 			const response: DataWidgetResponse<FillDataWidgetValue> = {
 				current,
 				history
 			};
 
-			return json(response);
-		} catch (err: any) {
-			console.error(`Error in widget ${name}:`, err);
-			return json({ error: err.message }, { status: 500 });
-		}
-	};
-}
-
-export function createPassThroughHistoryEndpoint(
-	name: string,
-	fetchFn: WidgetResponseFn,
-	options: StandardWidgetDataEndpointOptions = new StandardWidgetDataEndpointOptions()
-): RequestHandler {
-	return async () => {
-		try {
-			const response: DataWidgetResponse<FillDataWidgetValue> = await fetchFn();
 			return json(response);
 		} catch (err: any) {
 			console.error(`Error in widget ${name}:`, err);

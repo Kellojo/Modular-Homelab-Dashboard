@@ -1,7 +1,15 @@
 <script lang="ts">
+	import { getWidgetDataUrl } from '$lib/common/WidgetDataUrl';
 	import Widget from './Widget.svelte';
 
-	let { applyResults, content, refreshInterval = 5000, datasource, datapoint, ...props } = $props();
+	let {
+		applyResults,
+		content,
+		refreshInterval = 10000,
+		datasource,
+		datapoint,
+		...props
+	} = $props();
 	let url = $state(props.url || '');
 
 	$effect(() => {
@@ -9,9 +17,7 @@
 		async function poll() {
 			while (active) {
 				try {
-					const response = await fetch(
-						`/api/plugins/${datasource}/${datapoint.replaceAll('.', '/')}`
-					);
+					const response = await fetch(getWidgetDataUrl(datasource, datapoint));
 					if (!response.ok) throw new Error('Network response was not ok');
 					const data = await response.json();
 
