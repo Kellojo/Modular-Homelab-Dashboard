@@ -45,7 +45,10 @@
 				{@const Comp = getComponent(widget)}
 				<Comp {...widget} />
 			{:else}
-				<p class="text-red-500">Unknown widget: {widget.type}</p>
+				<p class="text-red-500">
+					Unknown widget: {widget.type}
+					{widget.subtype ? widget.subtype : ''}
+				</p>
 			{/if}
 		{/each}
 	</WidgetGrid>
