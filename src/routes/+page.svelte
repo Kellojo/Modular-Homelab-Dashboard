@@ -7,9 +7,9 @@
 	import StatusHistoryDataWidget from '$lib/components/datawidgets/StatusHistoryDataWidget.svelte';
 	import TextDataWidget from '$lib/components/datawidgets/TextDataWidget.svelte';
 	import BarHistoryDataWidget from '$lib/components/datawidgets/BarHistoryDataWidget.svelte';
-    import ProgressWidget from '$lib/components/datawidgets/ProgressWidget.svelte';
+	import ProgressWidget from '$lib/components/datawidgets/ProgressWidget.svelte';
 	import type { WidgetData } from '../lib/server/Config.js';
-
+	import Background from '$lib/components/Background.svelte';
 	const { data } = $props();
 
 	const components = {
@@ -19,7 +19,7 @@
 			text: TextDataWidget,
 			fill: FillWidget,
 			bar: BarHistoryDataWidget,
-            progressbar: ProgressWidget,
+			progressbar: ProgressWidget,
 			statushistory: StatusHistoryDataWidget,
 			line: LineHistoryDataWidget
 		}
@@ -33,6 +33,11 @@
 	}
 </script>
 
+<Background
+	blur={data.config.background?.blur}
+	imagepath={data.config.background?.url}
+	brightness={data.config.background?.brightness}
+/>
 <div class="page">
 	<WidgetGrid>
 		{#each data.widgets as widget}

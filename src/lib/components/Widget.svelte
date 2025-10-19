@@ -83,6 +83,7 @@
 		color: var(--primaryText);
 		font-size: 1rem;
 		margin: 0;
+		word-break: break-all;
 	}
 
 	p {

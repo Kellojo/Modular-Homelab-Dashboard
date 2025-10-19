@@ -57,6 +57,12 @@ interface Config {
 	config: {
 		historyLength: number;
 		refreshCron: string;
+
+		background?: {
+			url: string;
+			blur?: string;
+			brightness?: string;
+		};
 	};
 
 	plugins: {
