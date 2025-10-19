@@ -25,12 +25,12 @@
 	}
 
 	.success {
-		background-color: var(--success);
+		background-image: linear-gradient(90deg, var(--successSecondary), var(--success));
 	}
 	.warning {
-		background-color: var(--warning);
+		background-image: linear-gradient(90deg, var(--warningSecondary), var(--warning));
 	}
 	.error {
-		background-color: var(--error);
+		background-image: linear-gradient(90deg, var(--errorSecondary), var(--error));
 	}
 </style>

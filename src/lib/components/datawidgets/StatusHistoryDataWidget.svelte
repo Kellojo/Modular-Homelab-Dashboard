@@ -36,17 +36,17 @@
 
 	.historyEntry {
 		min-width: 0.375rem;
-		height: 1rem;
+		height: 1.5rem;
 		border-radius: 0.25rem;
 	}
 
 	.success {
-		background-color: var(--success);
+		background-image: linear-gradient(0deg, var(--successSecondary), var(--success));
 	}
 	.warning {
-		background-color: var(--warning);
+		background-image: linear-gradient(0deg, var(--warningSecondary), var(--warning));
 	}
 	.error {
-		background-color: var(--error);
+		background-image: linear-gradient(0deg, var(--errorSecondary), var(--error));
 	}
 </style>

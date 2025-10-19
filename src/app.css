@@ -22,13 +22,13 @@
 		0 6px 10px var(--shadow-mid);
 
 	--success: hsl(108, 60%, 57%);
-	--successSecondary: hsl(108, 60%, 57%, 50%);
+	--successSecondary: hsl(108, 60%, 17%);
 
 	--warning: hsl(39, 100%, 50%);
-	--warningSecondary: hsl(39, 100%, 50%, 50%);
+	--warningSecondary: hsl(39, 100%, 10%);
 
 	--error: hsl(0, 80%, 60%);
-	--errorSecondary: hsl(0, 80%, 60%, 50%);
+	--errorSecondary: hsl(0, 80%, 20%);
 
 	--cellSize: 128px;
 	--cellGap: 1rem;
