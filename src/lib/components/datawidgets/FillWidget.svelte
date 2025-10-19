@@ -38,12 +38,12 @@
 	}
 
 	.success {
-		background-color: var(--successSecondary);
+		background-image: linear-gradient(0deg, var(--successSecondary), var(--success));
 	}
 	.warning {
-		background-color: var(--warningSecondary);
+		background-image: linear-gradient(0deg, var(--warningSecondary), var(--warning));
 	}
 	.error {
-		background-color: var(--errorSecondary);
+		background-image: linear-gradient(0deg, var(--errorSecondary), var(--error));
 	}
 </style>

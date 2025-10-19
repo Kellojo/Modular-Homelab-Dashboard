@@ -13,7 +13,7 @@
 		background-color: var(--backgroundLight);
 		border-radius: 1rem;
 		box-sizing: border-box;
-		padding: 0.25rem;
+		padding: 0.125rem;
 		overflow: hidden;
 	}
 
@@ -22,6 +22,7 @@
 		height: 100%;
 		border-radius: 1rem;
 		background-color: var(--primaryText);
+		transition: width 0.2s ease-in;
 	}
 
 	.success {
