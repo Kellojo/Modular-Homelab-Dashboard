@@ -8,6 +8,7 @@ export const GET = createWidgetEndpoint('system/disk', async (url: URL) => {
 
 	const volumeFilter = url.searchParams.get('volume');
 	const filteredFsSize = fsSize.filter((fs) => {
+		console.log('fs.mount:', fs.mount);
 		if (!volumeFilter) return true;
 		return volumeFilter.includes(fs.mount);
 	});
