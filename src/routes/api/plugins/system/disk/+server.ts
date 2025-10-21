@@ -6,7 +6,7 @@ import { getValueStateLIB } from '$lib/types/valueState';
 export const GET = createWidgetEndpoint('system/disk', async (url: URL) => {
 	const fsSize = await si.fsSize();
 
-	const volumeFilter = url.searchParams.get('filter');
+	const volumeFilter = url.searchParams.get('volume');
 	const filteredFsSize = fsSize.filter((fs) => {
 		if (!volumeFilter) return true;
 		return volumeFilter.includes(fs.mount);

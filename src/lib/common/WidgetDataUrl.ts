@@ -3,12 +3,17 @@ import type { WidgetData } from '$lib/server/Config';
 export function getWidgetDataUrl(
 	datasource: string,
 	datapoint: string,
-	datafilter?: string
+	datafilter?: Record<string, string | number | boolean>
 ): string {
 	let url = `/api/plugins/${datasource}/${datapoint.replaceAll('.', '/')}`;
 
-	if (datafilter) {
-		url += `?filter=${encodeURIComponent(datafilter)}`;
+	const hasAnyFilter = datafilter && Object.keys(datafilter).length > 0;
+	if (hasAnyFilter) {
+		url += url.includes('?') ? '&' : '?';
+		const filterParams = Object.entries(datafilter!)
+			.map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+			.join('&');
+		url += filterParams;
 	}
 
 	return url;
