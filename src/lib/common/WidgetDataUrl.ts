@@ -1,7 +1,17 @@
 import type { WidgetData } from '$lib/server/Config';
 
-export function getWidgetDataUrl(datasource: string, datapoint: string): string {
-	return `/api/plugins/${datasource}/${datapoint.replaceAll('.', '/')}`;
+export function getWidgetDataUrl(
+	datasource: string,
+	datapoint: string,
+	datafilter?: string
+): string {
+	let url = `/api/plugins/${datasource}/${datapoint.replaceAll('.', '/')}`;
+
+	if (datafilter) {
+		url += `?filter=${encodeURIComponent(datafilter)}`;
+	}
+
+	return url;
 }
 
 export function getFullWidgetDataUrl(widget: WidgetData): string {

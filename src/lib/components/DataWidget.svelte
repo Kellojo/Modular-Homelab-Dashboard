@@ -8,6 +8,7 @@
 		refreshInterval = 10000,
 		datasource,
 		datapoint,
+		datafilter,
 		...props
 	} = $props();
 	let url = $state(props.url || '');
@@ -17,7 +18,7 @@
 		async function poll() {
 			while (active) {
 				try {
-					const response = await fetch(getWidgetDataUrl(datasource, datapoint));
+					const response = await fetch(getWidgetDataUrl(datasource, datapoint, datafilter));
 					if (!response.ok) throw new Error('Network response was not ok');
 					const data = await response.json();
 

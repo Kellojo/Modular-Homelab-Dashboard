@@ -1,7 +1,7 @@
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
-export type WidgetFetchFn = () => Promise<any>;
+export type WidgetFetchFn = (url: URL) => Promise<any>;
 export type WidgetResponseFn = () => Promise<DataWidgetResponse<FillDataWidgetValue>>;
 export class StandardWidgetDataEndpointOptions {
 	maxHistory: number = 128;
@@ -26,7 +26,7 @@ export function createWidgetEndpoint(
 		const addToHistory: boolean = url.searchParams.get('addToHistory') === 'true';
 
 		try {
-			const current = await fetchFn();
+			const current = await fetchFn(url);
 
 			if (addToHistory) {
 				addHistoryEntry(name, options, current);

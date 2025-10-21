@@ -3,10 +3,17 @@ import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import { filesize } from 'filesize';
 import { getValueStateLIB } from '$lib/types/valueState';
 
-export const GET = createWidgetEndpoint('system/disk', async () => {
+export const GET = createWidgetEndpoint('system/disk', async (url: URL) => {
 	const fsSize = await si.fsSize();
-	const used = fsSize.reduce((acc, curr) => acc + curr.used, 0);
-	const size = fsSize.reduce((acc, curr) => acc + curr.size, 0);
+
+	const volumeFilter = url.searchParams.get('filter');
+	const filteredFsSize = fsSize.filter((fs) => {
+		if (!volumeFilter) return true;
+		return volumeFilter.includes(fs.mount);
+	});
+
+	const used = filteredFsSize.reduce((acc, curr) => acc + curr.used, 0);
+	const size = filteredFsSize.reduce((acc, curr) => acc + curr.size, 0);
 
 	return {
 		displayValue: `${filesize(used, {
