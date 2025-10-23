@@ -5,28 +5,30 @@ import { ValueState } from '$lib/types/valueState';
 import { PiholeClient } from '../PiholeClient';
 
 export const GET = createPassThroughHistoryEndpoint('pihole/forwarded', async () => {
-    const piholeClient = new PiholeClient();
-    const stats = await piholeClient.getHistory();
+	const piholeClient = new PiholeClient();
+	const stats = await piholeClient.getHistory();
+	const piholeUrl = await piholeClient.getPiholeUrl();
 
-    const current = stats.history.reduce((res, entry) => res + entry.forwarded, 0);
+	const current = stats.history.reduce((res, entry) => res + entry.forwarded, 0);
 
-    const response: DataWidgetResponse<FillDataWidgetValue> = {
-        current: {
-            displayValue: formatInteger(current),
-            value: current,
-            classification: ValueState.Success,
-            unit: ''
-        },
-        history: stats.history.map((entry) => ({
-            timestamp: new Date(entry.timestamp * 1000),
-            value: {
-                displayValue: formatInteger(entry.forwarded),
-                value: entry.forwarded,
-                classification: ValueState.Success,
-                unit: ''
-            }
-        }))
-    };
+	const response: DataWidgetResponse<FillDataWidgetValue> = {
+		current: {
+			displayValue: formatInteger(current),
+			value: current,
+			classification: ValueState.Success,
+			unit: '',
+			url: piholeUrl || undefined
+		},
+		history: stats.history.map((entry) => ({
+			timestamp: new Date(entry.timestamp * 1000),
+			value: {
+				displayValue: formatInteger(entry.forwarded),
+				value: entry.forwarded,
+				classification: ValueState.Success,
+				unit: ''
+			}
+		}))
+	};
 
-    return response;
+	return response;
 });

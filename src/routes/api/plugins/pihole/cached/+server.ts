@@ -7,6 +7,7 @@ import { PiholeClient } from '../PiholeClient';
 export const GET = createPassThroughHistoryEndpoint('pihole/cached', async () => {
 	const piholeClient = new PiholeClient();
 	const stats = await piholeClient.getHistory();
+	const piholeUrl = await piholeClient.getPiholeUrl();
 
 	const current = stats.history.reduce((res, entry) => res + entry.cached, 0);
 
@@ -15,7 +16,8 @@ export const GET = createPassThroughHistoryEndpoint('pihole/cached', async () =>
 			displayValue: formatInteger(current),
 			value: current,
 			classification: ValueState.Success,
-			unit: ''
+			unit: '',
+			url: piholeUrl || undefined
 		},
 		history: stats.history.map((entry) => ({
 			timestamp: new Date(entry.timestamp * 1000),

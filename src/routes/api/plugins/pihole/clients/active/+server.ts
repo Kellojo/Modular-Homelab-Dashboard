@@ -6,10 +6,12 @@ import { PiholeClient } from '../../PiholeClient';
 export const GET = createWidgetEndpoint('pihole/clients/active', async () => {
 	const piholeClient = new PiholeClient();
 	const stats = await piholeClient.getStatsSummary();
+	const piholeUrl = await piholeClient.getPiholeUrl();
 
 	return {
 		value: stats.clients.active,
 		classification: ValueState.Success,
-		displayValue: `${formatInteger(stats.clients.active)}`
+		displayValue: `${formatInteger(stats.clients.active)}`,
+		url: piholeUrl || undefined
 	};
 });

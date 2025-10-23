@@ -26,9 +26,4 @@ export const GET = createWidgetEndpoint('uptimekuma/status', async () => {
 		if (e instanceof Error) return error(500, e.message);
 		return error(500, 'Unknown error');
 	}
-
-	return {
-		classification: null,
-		displayValue: ''
-	};
 });

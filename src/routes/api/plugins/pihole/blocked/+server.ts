@@ -7,6 +7,7 @@ import { PiholeClient } from '../PiholeClient';
 export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () => {
 	const piholeClient = new PiholeClient();
 	const stats = await piholeClient.getHistory();
+	const piholeUrl = await piholeClient.getPiholeUrl();
 
 	const current = stats.history.reduce((res, entry) => res + entry.blocked, 0);
 
@@ -15,7 +16,8 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 			displayValue: formatInteger(current),
 			value: current,
 			classification: ValueState.Success,
-			unit: ''
+			unit: '',
+			url: piholeUrl || undefined
 		},
 		history: stats.history.map((entry) => ({
 			timestamp: new Date(entry.timestamp * 1000),

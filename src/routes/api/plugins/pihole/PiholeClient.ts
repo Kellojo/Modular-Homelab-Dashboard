@@ -100,6 +100,13 @@ export class PiholeClient {
 		return new URL(apiPath, piholeUrl).toString();
 	}
 
+	async getPiholeUrl(): Promise<string | null> {
+		const config = await getConfig();
+		const piholeUrl = config.plugins?.pihole?.url;
+		if (!piholeUrl) return null;
+		return new URL('/admin', piholeUrl).toString();
+	}
+
 	async getStatsSummary(): Promise<PiholeStatsSummaryResponse> {
 		await this.authenticate();
 
