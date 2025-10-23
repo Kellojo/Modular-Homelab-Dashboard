@@ -19,6 +19,7 @@
 
 <div
 	class="widget"
+	class:clickable={!!url}
 	style="grid-column: span {width}; grid-row: span {height};"
 	{onclick}
 	onkeydown={(e) => e.key === 'Enter' && onclick()}
@@ -53,7 +54,7 @@
 		padding: 1rem;
 		box-shadow: var(--shadow-s);
 
-		cursor: pointer;
+		cursor: default;
 
 		position: relative;
 		overflow: hidden;
@@ -61,6 +62,15 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
+
+		transition: border-color 0.1s ease-out;
+	}
+
+	.clickable {
+		cursor: pointer;
+	}
+	.clickable:hover {
+		border-color: var(--borderHoverColor);
 	}
 
 	.title {

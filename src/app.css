@@ -6,6 +6,7 @@
 	--backgroundTextContrastShadow: hsl(0, 0%, 5%, 25%);
 	--backgroundLight: hsl(0, 0%, 10%);
 	--borderColor: hsl(0, 0%, 15%, 90%);
+	--borderHoverColor: hsl(0, 0%, 25%, 90%);
 
 	--shadow-highlight: hsla(0, 0%, 100%, 15%);
 	--shadow-dark: hsla(0, 0%, 0%, 30%);
