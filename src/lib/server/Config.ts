@@ -66,6 +66,9 @@ interface Config {
 	};
 
 	plugins: {
+		gitea: {
+			url?: string;
+		};
 		uptimekuma: {
 			url?: string;
 			statusPage?: string;
