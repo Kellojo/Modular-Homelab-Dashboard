@@ -13,26 +13,30 @@ export const GET = createPassThroughHistoryEndpoint('gitea/users/username/heatma
 	const giteaClient = new GiteaClient();
 	const heatmap = await giteaClient.getUserHeatmap(username);
 
-	const overallContributions = heatmap.reduce((sum, entry) => sum + entry.contributions, 0);
-	const current = getWidgetValue(overallContributions);
+	const overallContributions = Object.values(heatmap).reduce((sum, val) => sum + val, 0);
+	const current = getWidgetValue(overallContributions, 'Overall');
 	current.url = (await giteaClient.getGiteaUrl()) || '';
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: current,
-		history: heatmap.map((entry) => ({
-			timestamp: new Date(entry.timestamp * 1000),
-			value: getWidgetValue(entry.contributions)
-		}))
+		history: Object.entries(heatmap).map(([day, contributions]) => {
+			return {
+				timestamp: new Date(day),
+				value: getWidgetValue(contributions, day)
+			};
+		})
 	};
 
 	return response;
 });
 
-function getWidgetValue(contributions: number): FillDataWidgetValue {
+function getWidgetValue(contributions: number, day: string): FillDataWidgetValue {
+	const displayValue = `${formatInteger(contributions)} contributions`;
 	return {
-		displayValue: `${formatInteger(contributions)} contributions`,
+		displayValue: displayValue,
 		value: contributions,
 		classification: ValueState.Success,
-		unit: ''
+		unit: '',
+		tooltip: `Contributions on ${new Date(day).toLocaleDateString()}: ${formatInteger(contributions)}`
 	};
 }

@@ -17,17 +17,23 @@ export const GET = createPassThroughHistoryEndpoint('pihole/cached', async () =>
 			value: current,
 			classification: ValueState.Success,
 			unit: '',
-			url: piholeUrl || undefined
+			url: piholeUrl || undefined,
+			tooltip: `Total cached DNS requests: ${formatInteger(current)}`
 		},
-		history: stats.history.map((entry) => ({
-			timestamp: new Date(entry.timestamp * 1000),
-			value: {
-				displayValue: formatInteger(entry.cached),
-				value: entry.cached,
-				classification: ValueState.Success,
-				unit: ''
-			}
-		}))
+		history: stats.history.map((entry) => {
+			const timestamp = new Date(entry.timestamp * 1000);
+			const displayValue = formatInteger(entry.cached);
+			return {
+				timestamp: timestamp,
+				value: {
+					displayValue: displayValue,
+					value: entry.cached,
+					classification: ValueState.Success,
+					unit: '',
+					tooltip: `Cached DNS requests at ${timestamp.toLocaleString()}: ${displayValue}`
+				}
+			};
+		})
 	};
 
 	return response;

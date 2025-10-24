@@ -11,23 +11,31 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 
 	const current = stats.history.reduce((res, entry) => res + entry.blocked, 0);
 
+	const currentDisplayValue = formatInteger(current);
+
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: {
-			displayValue: formatInteger(current),
+			displayValue: currentDisplayValue,
 			value: current,
 			classification: ValueState.Success,
 			unit: '',
-			url: piholeUrl || undefined
+			url: piholeUrl || undefined,
+			tooltip: `Total blocked ads: ${currentDisplayValue}`
 		},
-		history: stats.history.map((entry) => ({
-			timestamp: new Date(entry.timestamp * 1000),
-			value: {
-				displayValue: formatInteger(entry.blocked),
-				value: entry.blocked,
-				classification: ValueState.Success,
-				unit: ''
-			}
-		}))
+		history: stats.history.map((entry) => {
+			const displayValue = formatInteger(entry.blocked);
+			const timestamp = new Date(entry.timestamp * 1000);
+			return {
+				timestamp: timestamp,
+				value: {
+					displayValue: displayValue,
+					value: entry.blocked,
+					classification: ValueState.Success,
+					unit: '',
+					tooltip: `Blocked DNS requests at ${timestamp.toLocaleString()}: ${displayValue}`
+				}
+			};
+		})
 	};
 
 	return response;

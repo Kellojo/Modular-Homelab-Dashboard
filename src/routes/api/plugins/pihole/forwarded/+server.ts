@@ -10,24 +10,30 @@ export const GET = createPassThroughHistoryEndpoint('pihole/forwarded', async ()
 	const piholeUrl = await piholeClient.getPiholeUrl();
 
 	const current = stats.history.reduce((res, entry) => res + entry.forwarded, 0);
+	const currentDisplayValue = formatInteger(current);
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: {
-			displayValue: formatInteger(current),
+			displayValue: currentDisplayValue,
 			value: current,
 			classification: ValueState.Success,
 			unit: '',
-			url: piholeUrl || undefined
+			url: piholeUrl || undefined,
+			tooltip: `Total forwarded DNS requests: ${currentDisplayValue}`
 		},
-		history: stats.history.map((entry) => ({
-			timestamp: new Date(entry.timestamp * 1000),
-			value: {
-				displayValue: formatInteger(entry.forwarded),
-				value: entry.forwarded,
-				classification: ValueState.Success,
-				unit: ''
-			}
-		}))
+		history: stats.history.map((entry) => {
+			const timestamp = new Date(entry.timestamp * 1000);
+			return {
+				timestamp: timestamp,
+				value: {
+					displayValue: formatInteger(entry.forwarded),
+					value: entry.forwarded,
+					classification: ValueState.Success,
+					unit: '',
+					tooltip: `Forwarded DNS requests at ${timestamp.toLocaleString()}: ${formatInteger(entry.forwarded)}`
+				}
+			};
+		})
 	};
 
 	return response;

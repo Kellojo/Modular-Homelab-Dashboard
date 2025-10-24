@@ -44,11 +44,19 @@ export default class GiteaClient {
 		return data.data;
 	}
 
-	async getUserHeatmap(username: string): Promise<HeatMapResponse> {
+	async getUserHeatmap(username: string): Promise<{ [key: string]: number }> {
 		const apiUrl = await this.getApiUrl(`/api/v1/users/${username}/heatmap`);
 		const response = await this.authenticatedFetch(apiUrl);
 		const data: HeatMapResponse = await response.json();
-		return data;
+
+		const groupedByDay: { [key: string]: number } = {};
+		data.forEach((entry) => {
+			const date = new Date(entry.timestamp * 1000);
+			const dayKey = date.toISOString().split('T')[0];
+			groupedByDay[dayKey] = (groupedByDay[dayKey] || 0) + entry.contributions;
+		});
+
+		return groupedByDay;
 	}
 
 	async authenticatedFetch(url: string, options: RequestInit = {}): Promise<Response> {

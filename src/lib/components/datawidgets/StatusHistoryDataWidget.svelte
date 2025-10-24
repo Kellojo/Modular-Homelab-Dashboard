@@ -15,10 +15,7 @@
 {#snippet content()}
 	<div class="history">
 		{#each history as entry}
-			<div
-				class={['historyEntry', entry.value.classification]}
-				title={`${new Date(entry.timestamp).toLocaleTimeString()}: ${entry.value.displayValue}`}
-			></div>
+			<div class={['historyEntry', entry.value.classification]} title={entry.value.tooltip}></div>
 		{/each}
 	</div>
 {/snippet}

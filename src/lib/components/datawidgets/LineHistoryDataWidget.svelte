@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { ValueState } from '$lib/types/valueState';
-	import type { DataWidgetResponse, FillDataWidgetValue, DataWidgetResponseHistoryPoint } from '../../types/DataWidgetValueTypes';
+	import type {
+		DataWidgetResponse,
+		FillDataWidgetValue,
+		DataWidgetResponseHistoryPoint
+	} from '../../types/DataWidgetValueTypes';
 	import DataWidget from '../DataWidget.svelte';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
@@ -27,16 +31,10 @@
 			.attr('y1', '0%')
 			.attr('x2', '100%')
 			.attr('y2', '0%');
-		
-		gradient
-			.append('stop')
-			.attr('offset', '0%')
-			.attr('stop-color', 'var(--successSecondary)');
-		
-		gradient
-			.append('stop')
-			.attr('offset', '100%')
-			.attr('stop-color', 'var(--success)');
+
+		gradient.append('stop').attr('offset', '0%').attr('stop-color', 'var(--successSecondary)');
+
+		gradient.append('stop').attr('offset', '100%').attr('stop-color', 'var(--success)');
 
 		curveFunc = d3
 			.line<DataWidgetResponseHistoryPoint<FillDataWidgetValue>>()
@@ -54,7 +52,11 @@
 				return y;
 			});
 
-		path = svg.append('path').attr('fill', 'none').attr('stroke', 'url(#line-gradient)').attr('stroke-width', 2);
+		path = svg
+			.append('path')
+			.attr('fill', 'none')
+			.attr('stroke', 'url(#line-gradient)')
+			.attr('stroke-width', 2);
 	});
 
 	const maxPointCount = 64;

@@ -33,7 +33,7 @@
 				style="height: {(((entry.value.value as number) - minValue) / (maxValue - minValue)) *
 					100}%;"
 				class={['historyEntry', entry.value.classification]}
-				title={`${new Date(entry.timestamp).toLocaleTimeString()}: ${entry.value.displayValue}`}
+				title={entry.value.tooltip}
 			></div>
 		{/each}
 	</div>

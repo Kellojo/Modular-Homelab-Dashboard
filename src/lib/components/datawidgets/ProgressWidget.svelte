@@ -7,11 +7,13 @@
 	let props = $props();
 	let fill = $state(0);
 	let subtitle = $state(props.subtitle || '-');
+	let tooltip = $state('');
 	let classification = $state(ValueState.Unknown);
 
 	function applyResults(data: DataWidgetResponse<FillDataWidgetValue>) {
 		const current = data.current;
 		subtitle = props.subtitle || current.displayValue;
+		tooltip = current.tooltip || '';
 		classification = current.classification || ValueState.Unknown;
 
 		const value = current.value as number;
@@ -22,7 +24,7 @@
 </script>
 
 {#snippet content()}
-	<Progressbar {fill} {classification} title={subtitle} />
+	<Progressbar {fill} {classification} title={tooltip} />
 {/snippet}
 
 <DataWidget {...props} {subtitle} {applyResults} {content}></DataWidget>

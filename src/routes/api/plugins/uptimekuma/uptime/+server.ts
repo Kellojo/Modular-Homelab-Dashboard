@@ -3,31 +3,36 @@ import getConfig from '$lib/server/Config';
 import type { UptimeKumaHeartbeatResponse } from '../types';
 import { getValueStateHIB } from '$lib/types/valueState';
 import { getUptimeKumaStatusPageUrl } from '../helpers';
+import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 
-export const GET = createWidgetEndpoint('uptimekuma/status', async () => {
-	const config = await getConfig();
-	const baseApiUrl = config.plugins.uptimekuma?.url;
-	if (!baseApiUrl) throw new Error('Uptime Kuma URL not configured');
+export const GET = createWidgetEndpoint(
+	'uptimekuma/status',
+	async (): Promise<FillDataWidgetValue> => {
+		const config = await getConfig();
+		const baseApiUrl = config.plugins.uptimekuma?.url;
+		if (!baseApiUrl) throw new Error('Uptime Kuma URL not configured');
 
-	const statusPage = config.plugins.uptimekuma?.statusPage || 'default';
-	const heartBeatUrl = new URL(`/api/status-page/heartbeat/${statusPage}`, baseApiUrl).toString();
+		const statusPage = config.plugins.uptimekuma?.statusPage || 'default';
+		const heartBeatUrl = new URL(`/api/status-page/heartbeat/${statusPage}`, baseApiUrl).toString();
 
-	const response = await fetch(heartBeatUrl);
-	if (!response.ok) throw new Error('Failed to fetch Uptime Kuma data');
+		const response = await fetch(heartBeatUrl);
+		if (!response.ok) throw new Error('Failed to fetch Uptime Kuma data');
 
-	const heartBeat = (await response.json()) as UptimeKumaHeartbeatResponse;
-	const uptime = calculateUptime(heartBeat);
+		const heartBeat = (await response.json()) as UptimeKumaHeartbeatResponse;
+		const uptime = calculateUptime(heartBeat);
 
-	return {
-		value: uptime,
-		classification: getValueStateHIB(uptime, { warning: 97, error: 75 }),
-		displayValue: `${uptime.toFixed(1)}%`,
-		unit: '%',
-		min: 0,
-		max: 100,
-		url: getUptimeKumaStatusPageUrl(baseApiUrl, statusPage)
-	};
-});
+		return {
+			value: uptime,
+			classification: getValueStateHIB(uptime, { warning: 97, error: 75 }),
+			displayValue: `${uptime.toFixed(1)}%`,
+			unit: '%',
+			min: 0,
+			max: 100,
+			url: getUptimeKumaStatusPageUrl(baseApiUrl, statusPage),
+			tooltip: `${new Date().toLocaleDateString()}: ${uptime.toFixed(1)}% uptime`
+		};
+	}
+);
 
 function calculateUptime(heartBeat: UptimeKumaHeartbeatResponse): number {
 	let uptimePercentage = 0;

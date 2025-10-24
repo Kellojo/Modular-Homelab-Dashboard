@@ -10,6 +10,7 @@ export interface FillDataWidgetValue {
 	displayValue: string;
 	value: number | string;
 	classification: ValueState;
+	tooltip: string;
 	url?: string;
 	unit: string;
 	min?: number;
