@@ -21,6 +21,7 @@
 			-webkit-box-orient: vertical;
 			-webkit-line-clamp: 2;
 			overflow: hidden;
+			z-index: 2;
 		}
 	}
 </style>
