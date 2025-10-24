@@ -10,9 +10,9 @@ export function createPassThroughHistoryEndpoint(
 	fetchFn: WidgetResponseFn,
 	options: StandardWidgetDataEndpointOptions = new StandardWidgetDataEndpointOptions()
 ): RequestHandler {
-	return async () => {
+	return async ({ url }) => {
 		try {
-			const response: DataWidgetResponse<FillDataWidgetValue> = await fetchFn();
+			const response: DataWidgetResponse<FillDataWidgetValue> = await fetchFn(url);
 			return json(response);
 		} catch (err: any) {
 			if (err instanceof Error) {

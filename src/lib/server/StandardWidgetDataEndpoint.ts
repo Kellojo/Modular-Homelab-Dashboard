@@ -2,7 +2,7 @@ import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWid
 import { json, type RequestHandler } from '@sveltejs/kit';
 
 export type WidgetFetchFn = (url: URL) => Promise<any>;
-export type WidgetResponseFn = () => Promise<DataWidgetResponse<FillDataWidgetValue>>;
+export type WidgetResponseFn = (url: URL) => Promise<DataWidgetResponse<FillDataWidgetValue>>;
 export class StandardWidgetDataEndpointOptions {
 	maxHistory: number = 128;
 	minHistoryIntervalSeconds: number = 0.5;

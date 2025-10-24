@@ -44,6 +44,13 @@ export default class GiteaClient {
 		return data.data;
 	}
 
+	async getUserHeatmap(username: string): Promise<HeatMapResponse> {
+		const apiUrl = await this.getApiUrl(`/api/v1/users/${username}/heatmap`);
+		const response = await this.authenticatedFetch(apiUrl);
+		const data: HeatMapResponse = await response.json();
+		return data;
+	}
+
 	async authenticatedFetch(url: string, options: RequestInit = {}): Promise<Response> {
 		const token = env.GITEA_TOKEN;
 		if (!token) throw new Error('GITEA_TOKEN is not set');
@@ -102,3 +109,9 @@ export interface RepositorySearchResponse {
 	ok: boolean;
 	data: Repository[];
 }
+
+export interface HeatMapResponse
+	extends Array<{
+		timestamp: number;
+		contributions: number;
+	}> {}
