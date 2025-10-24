@@ -22,7 +22,7 @@ export default async function getConfig(): Promise<Config> {
 
 		try {
 			const config: Config = yaml.parse(data);
-			if (!config.plugins) config.plugins = { uptimekuma: {}, pihole: {} };
+			if (!config.plugins) config.plugins = { uptimekuma: {}, pihole: {}, gitea: {} };
 			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
 			if (!config.plugins.pihole) config.plugins.pihole = {};
 			if (!config.widgets) config.widgets = [];

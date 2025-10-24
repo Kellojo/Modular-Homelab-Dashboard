@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { DataWidgetResponse } from '$lib/types/DataWidgetValueTypes';
-	import type { TextDataWidgetValue } from '../../../routes/api/plugins/system/+server';
+	import type { DataWidgetResponse, TextDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 	import { ValueState } from '../../types/valueState';
 	import DataWidget from '../DataWidget.svelte';
 
