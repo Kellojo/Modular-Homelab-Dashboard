@@ -5,6 +5,11 @@ export default class DockerClient {
 		const containers = await si.dockerContainers();
 		return containers.length;
 	}
+
+	public async getContainers(): Promise<si.Systeminformation.DockerContainerData[]> {
+		const containers = await si.dockerContainers();
+		return containers;
+	}
 }
 
 export enum DockerContainerState {

@@ -17,6 +17,10 @@ export interface FillDataWidgetValue {
 	max?: number;
 }
 
+export interface ListDataWidgetValue {
+    items: FillDataWidgetValue[];
+}
+
 export interface DataWidgetResponse<T> {
 	current: T;
 	history: DataWidgetResponseHistoryPoint<T>[];

@@ -1,7 +1,16 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	let { title = '', subtitle = '', width = 1, height = 1, content, url = '', icon } = $props();
+	let {
+		title = '',
+		subtitle = '',
+		width = 1,
+		height = 1,
+		content,
+		url = '',
+		icon,
+		enableContentScrolling = false
+	} = $props();
 
 	const MAX_WIDTH = 2;
 	const MAX_HEIGHT = 3;
@@ -40,7 +49,9 @@
 	{/if}
 
 	{#if content}
-		<div class="content">{@render content()}</div>
+		<div class="content {enableContentScrolling ? 'enableContentScrolling' : ''}">
+			{@render content()}
+		</div>
 	{/if}
 </div>
 
@@ -64,6 +75,17 @@
 		gap: 0.25rem;
 
 		transition: border-color 0.1s ease-out;
+	}
+
+	.enableContentScrolling {
+		overflow-y: auto;
+		scrollbar-color: transparent transparent;
+		transition: scrollbar-color 0.2s;
+		scrollbar-width: none;
+	}
+
+	.enableContentScrolling:hover {
+		scrollbar-color: var(--backgroundLight) transparent;
 	}
 
 	.clickable {
