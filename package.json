@@ -33,6 +33,7 @@
 		"d3": "^7.9.0",
 		"dotenv": "^17.2.3",
 		"filesize": "^11.0.13",
+		"humanize-duration-ts": "^2.1.1",
 		"node-cron": "^4.2.1",
 		"systeminformation": "^5.27.11",
 		"yaml": "^2.8.1"

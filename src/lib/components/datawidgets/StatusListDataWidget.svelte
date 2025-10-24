@@ -8,10 +8,12 @@
 	import StatusIndicator from '../generic/StatusIndicator.svelte';
 
 	let props = $props();
+	let subtitle = $state('');
 	let list = $state<FillDataWidgetValue[]>([]);
 
 	function applyResults(data: DataWidgetResponse<ListDataWidgetValue>) {
 		list = data.current.items;
+		subtitle = data.current.displayValue;
 	}
 </script>
 
@@ -26,7 +28,8 @@
 	</div>
 {/snippet}
 
-<DataWidget {...props} {applyResults} {content} enableContentScrolling={true}></DataWidget>
+<DataWidget {...props} {applyResults} {content} {subtitle} enableContentScrolling={true}
+></DataWidget>
 
 <style>
 	.list {

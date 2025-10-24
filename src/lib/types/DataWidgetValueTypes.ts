@@ -18,6 +18,7 @@ export interface FillDataWidgetValue {
 }
 
 export interface ListDataWidgetValue {
+    displayValue: string;
     items: FillDataWidgetValue[];
 }
 
