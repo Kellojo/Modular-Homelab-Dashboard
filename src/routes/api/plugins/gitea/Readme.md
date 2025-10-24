@@ -17,5 +17,8 @@ The token should be made available to the Homelab Dashboard application via the 
 
 ## Datapoints
 
-- `repos/count`: Displays the total number of repositories in your Gitea instance (scope: repo).
-- `admin/runners`: Shows the total number of GitHub Actions runners registered in your Gitea instance (scope: admin).
+- `version`: Displays the current version of your Gitea instance (scope: none).
+- `repos.count`: Displays the total number of repositories in your Gitea instance (scope: repo).
+- `admin.runners`: Shows the total number of GitHub Actions runners registered in your Gitea instance (scope: admin).
+- `repos.count`: Displays the total number of repositories in your Gitea instance (scope: org).
+- `users.heatmap`: Shows the user activity heatmap for your Gitea instance (scope: user).
