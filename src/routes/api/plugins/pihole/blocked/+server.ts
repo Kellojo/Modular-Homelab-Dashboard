@@ -32,7 +32,7 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 					value: entry.blocked,
 					classification: ValueState.Success,
 					unit: '',
-					tooltip: `Blocked DNS requests at ${timestamp.toLocaleString()}: ${displayValue}`
+					tooltip: `${displayValue} Blocked DNS requests at ${timestamp.toLocaleString()}`
 				}
 			};
 		})
