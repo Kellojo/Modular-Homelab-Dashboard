@@ -32,7 +32,12 @@ export const GET = createWidgetEndpoint(
 			});
 		});
 
-		const classificationOrder = [ValueState.Success, ValueState.Warning, ValueState.Unknown];
+		const classificationOrder = [
+			ValueState.Error,
+			ValueState.Warning,
+			ValueState.Success,
+			ValueState.Unknown
+		];
 		items.sort((a, b) => {
 			const classAIndex = classificationOrder.indexOf(a.classification);
 			const classBIndex = classificationOrder.indexOf(b.classification);
