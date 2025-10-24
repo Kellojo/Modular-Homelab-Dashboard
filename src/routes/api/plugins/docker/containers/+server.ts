@@ -18,9 +18,9 @@ export const GET = createWidgetEndpoint(
 			if (container.state === DockerContainerState.Running) {
 				tooltip = `Container started ${formatTimeAgo(new Date(container.startedAt))} using image ${container.image}`;
 			} else if (container.state === DockerContainerState.Exited) {
-				tooltip = `Container exited ${formatTimeAgo(new Date(container.startedAt))} using image ${container.image}`;
+				tooltip = `Container exited ${formatTimeAgo(new Date(container.finishedAt))} using image ${container.image}`;
 			} else if (container.state === DockerContainerState.Created) {
-				tooltip = `Container created ${formatTimeAgo(new Date(container.startedAt))} using image ${container.image}`;
+				tooltip = `Container created ${formatTimeAgo(new Date(container.createdAt))} using image ${container.image}`;
 			}
 
 			items.push({
