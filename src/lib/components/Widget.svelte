@@ -122,6 +122,7 @@
 		color: var(--secondaryText);
 		font-size: 0.875rem;
 		margin: 0;
+		flex-shrink: 0;
 	}
 
 	h3,
