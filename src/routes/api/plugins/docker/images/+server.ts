@@ -13,7 +13,7 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 	const items: FillDataWidgetValue[] = [];
 
 	images.forEach((image) => {
-		let tooltip = `${formatTimeAgo(new Date(image.created * 1000))} - ${filesize(image.size)}`;
+		let tooltip = `Created ${formatTimeAgo(new Date(image.created * 1000))} - ${filesize(image.size)}`;
 
 		let imageName = 'N/A';
 		if (image.repoTags && image.repoTags.length > 0) {
@@ -57,6 +57,6 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 });
 
 function getImageStateClassification(image: Systeminformation.DockerImageData): ValueState {
-	if (image.container === undefined) return ValueState.Error;
+	if (!image.container) return ValueState.Error;
 	return ValueState.Success;
 }

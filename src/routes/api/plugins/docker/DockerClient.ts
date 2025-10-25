@@ -1,5 +1,6 @@
 import { filesize } from 'filesize';
 import * as si from 'systeminformation';
+import * as fs from 'fs';
 
 export default class DockerClient {
 	public async getContainerCount(): Promise<number> {
@@ -18,7 +19,12 @@ export default class DockerClient {
 	}
 
 	public async getImages(): Promise<si.Systeminformation.DockerImageData[]> {
-		const images = await si.dockerImages(true);
+		const [images, containers] = await Promise.all([si.dockerImages(true), this.getContainers()]);
+
+		images.forEach((image) => {
+			image.container = containers.find((container) => container.imageID === image.id)?.id || '';
+		});
+
 		return images;
 	}
 
