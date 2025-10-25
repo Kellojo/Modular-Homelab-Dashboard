@@ -15,7 +15,7 @@ export const GET = createWidgetEndpoint(
 			classification: ValueState.Success,
 			unit: '',
 			displayValue: `${imageSize}`,
-			tooltip: `${new Date().toLocaleString()}: ${imageSize} images`
+			tooltip: `${new Date().toLocaleString()}: ${imageSize}`
 		};
 	}
 );

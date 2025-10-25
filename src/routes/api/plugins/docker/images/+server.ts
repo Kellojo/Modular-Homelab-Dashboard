@@ -13,7 +13,9 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 	const items: FillDataWidgetValue[] = [];
 
 	images.forEach((image) => {
-		let tooltip = `Created ${formatTimeAgo(new Date(image.created * 1000))} - ${filesize(image.size)}`;
+		const classification = getImageStateClassification(image);
+		let status = classification === ValueState.Success ? 'In use' : 'Not in use';
+		let tooltip = `${status}\nCreated ${formatTimeAgo(new Date(image.created * 1000))}\n${filesize(image.size)}`;
 
 		let imageName = 'N/A';
 		if (image.repoTags && image.repoTags.length > 0) {
@@ -32,8 +34,8 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 	const classificationOrder = [
 		ValueState.Error,
 		ValueState.Warning,
-		ValueState.Success,
-		ValueState.Unknown
+		ValueState.Unknown,
+		ValueState.Success
 	];
 	items.sort((a, b) => {
 		const classAIndex = classificationOrder.indexOf(a.classification);
@@ -45,7 +47,7 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 	});
 
 	const imagesSize = await dockerClient.getOverallImageSize();
-	let displayValue = `${images.length} available (${imagesSize})`;
+	let displayValue = `${images.length} available, ${imagesSize}`;
 	if (images.length === 0) {
 		displayValue = 'No Images found';
 	}
@@ -57,6 +59,6 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 });
 
 function getImageStateClassification(image: Systeminformation.DockerImageData): ValueState {
-	if (!image.container) return ValueState.Error;
+	if (!image.container) return ValueState.Unknown;
 	return ValueState.Success;
 }
