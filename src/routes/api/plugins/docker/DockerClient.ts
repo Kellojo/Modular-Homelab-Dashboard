@@ -1,3 +1,4 @@
+import { filesize } from 'filesize';
 import * as si from 'systeminformation';
 
 export default class DockerClient {
@@ -9,6 +10,22 @@ export default class DockerClient {
 	public async getContainers(): Promise<si.Systeminformation.DockerContainerData[]> {
 		const containers = await si.dockerContainers(true);
 		return containers;
+	}
+
+	public async getImageCount(): Promise<number> {
+		const images = await si.dockerImages(true);
+		return images.length;
+	}
+
+	public async getImages(): Promise<si.Systeminformation.DockerImageData[]> {
+		const images = await si.dockerImages(true);
+		return images;
+	}
+
+	public async getOverallImageSize(): Promise<string> {
+		const images = await this.getImages();
+		const overallSize = images.reduce((total, image) => total + (image.size || 0), 0);
+		return filesize(overallSize);
 	}
 }
 
