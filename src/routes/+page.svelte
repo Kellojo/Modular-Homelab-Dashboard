@@ -11,6 +11,7 @@
 	import type { WidgetData } from '../lib/server/Config.js';
 	import Background from '$lib/components/Background.svelte';
 	import StatusListDataWidget from '$lib/components/datawidgets/StatusListDataWidget.svelte';
+	import DashboardInfo from '$lib/components/DashboardInfo.svelte';
 	const { data } = $props();
 
 	const components = {
@@ -55,6 +56,8 @@
 		{/each}
 	</WidgetGrid>
 </div>
+
+<DashboardInfo />
 
 <style>
 	.page {
