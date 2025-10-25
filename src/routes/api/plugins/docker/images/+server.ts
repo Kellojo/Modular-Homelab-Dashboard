@@ -3,6 +3,8 @@ import type { FillDataWidgetValue, ListDataWidgetValue } from '$lib/types/DataWi
 import { ValueState } from '$lib/types/valueState';
 import type { Systeminformation } from 'systeminformation';
 import DockerClient from '../DockerClient';
+import { formatTimeAgo } from '$lib/server/Formatter';
+import { filesize } from 'filesize';
 
 export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListDataWidgetValue> => {
 	const dockerClient = new DockerClient();
@@ -11,9 +13,15 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 	const items: FillDataWidgetValue[] = [];
 
 	images.forEach((image) => {
-		let tooltip = '';
+		let tooltip = `${formatTimeAgo(new Date(image.created * 1000))} - ${filesize(image.size)}`;
+
+		let imageName = 'N/A';
+		if (image.repoTags && image.repoTags.length > 0) {
+			imageName = image.repoTags.join(', ');
+		}
+
 		items.push({
-			displayValue: image.repoTags ? image.repoTags.join(', ') : '<none>',
+			displayValue: imageName,
 			value: 1,
 			classification: getImageStateClassification(image),
 			tooltip: tooltip,
