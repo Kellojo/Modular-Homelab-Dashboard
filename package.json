@@ -1,8 +1,13 @@
 {
-	"name": "frontend",
+	"name": "modular-homelab-dashboard",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"homepage": "https://github.com/Kellojo/Modular-Homelab-Dashboard",
+	"author": {
+		"name": "Kellojo"
+	},
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
