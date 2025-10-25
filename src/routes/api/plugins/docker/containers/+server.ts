@@ -15,13 +15,14 @@ export const GET = createWidgetEndpoint(
 		containers.forEach((container) => {
 			let tooltip = '';
 			if (container.state === DockerContainerState.Running) {
-				tooltip = `Container started ${formatTimeAgo(new Date(container.startedAt))} using image ${container.image}`;
+				tooltip = `Container started ${formatTimeAgo(new Date(container.startedAt))}`;
 			} else if (container.state === DockerContainerState.Exited) {
-				tooltip = `Container exited ${formatTimeAgo(new Date(container.finishedAt))} using image ${container.image}`;
+				tooltip = `Container exited ${formatTimeAgo(new Date(container.finishedAt))}`;
 			} else if (container.state === DockerContainerState.Created) {
-				tooltip = `Container created ${formatTimeAgo(new Date(container.createdAt))} using image ${container.image}`;
+				tooltip = `Container created ${formatTimeAgo(new Date(container.createdAt))}`;
 			}
 
+			tooltip += `\nImage: ${container.image}`;
 			items.push({
 				displayValue: container.name,
 				value: 1,

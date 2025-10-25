@@ -28,7 +28,6 @@ export function formatTimeAgo(date: Date | string): string {
 	return `${m.fromNow()} ago`;
 }
 
-// TODO: reuse all existing usages of filesize with this function
 export function formatFileSize(bytes: number, round: number = 2): string {
 	return filesize(bytes, { round });
 }
