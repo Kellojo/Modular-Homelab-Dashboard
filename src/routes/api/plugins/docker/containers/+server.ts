@@ -1,9 +1,8 @@
-import { formatDateDuration, formatTimeAgo } from '$lib/server/Formatter';
+import { formatTimeAgo } from '$lib/server/Formatter';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue, ListDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
 import DockerClient, { DockerContainerState } from '../DockerClient';
-import { HumanizeDurationLanguage, HumanizeDuration } from 'humanize-duration-ts';
 
 export const GET = createWidgetEndpoint(
 	'docker/containers',

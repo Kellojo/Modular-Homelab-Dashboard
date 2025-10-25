@@ -1,8 +1,8 @@
 import * as si from 'systeminformation';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
-import { filesize } from 'filesize';
 import { ValueState } from '$lib/types/valueState';
 import type { TextDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
+import { formatFileSize } from '$lib/server/Formatter';
 
 export const GET = createWidgetEndpoint(
 	'system/network/totalDown',
@@ -11,7 +11,7 @@ export const GET = createWidgetEndpoint(
 		const totalTransmitted = ns.reduce((acc, curr) => acc + curr.rx_bytes, 0);
 
 		return {
-			displayValue: filesize(totalTransmitted, { round: 1 }),
+			displayValue: formatFileSize(totalTransmitted, 1),
 			classification: ValueState.Success
 		};
 	}

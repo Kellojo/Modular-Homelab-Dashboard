@@ -1,8 +1,8 @@
 import * as si from 'systeminformation';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
-import { filesize } from 'filesize';
 import { getValueStateLIB } from '$lib/types/valueState';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
+import { formatFileSize } from '$lib/server/Formatter';
 
 export const GET = createWidgetEndpoint(
 	'system/disk',
@@ -18,11 +18,7 @@ export const GET = createWidgetEndpoint(
 		const used = filteredFsSize.reduce((acc, curr) => acc + curr.used, 0);
 		const size = filteredFsSize.reduce((acc, curr) => acc + curr.size, 0);
 
-		const displayValue = `${filesize(used, {
-			round: 1
-		})} / ${filesize(size, {
-			round: 1
-		})}`;
+		const displayValue = `${formatFileSize(used, 1)} / ${formatFileSize(size, 1)}`;
 
 		return {
 			displayValue: displayValue,

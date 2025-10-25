@@ -1,6 +1,5 @@
-import { filesize } from 'filesize';
 import * as si from 'systeminformation';
-import * as fs from 'fs';
+import { formatFileSize } from '$lib/server/Formatter';
 
 export default class DockerClient {
 	public async getContainerCount(): Promise<number> {
@@ -31,7 +30,7 @@ export default class DockerClient {
 	public async getOverallImageSize(): Promise<string> {
 		const images = await this.getImages();
 		const overallSize = images.reduce((total, image) => total + (image.size || 0), 0);
-		return filesize(overallSize);
+		return formatFileSize(overallSize);
 	}
 }
 

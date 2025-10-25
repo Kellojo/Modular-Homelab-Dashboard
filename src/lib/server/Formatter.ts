@@ -1,4 +1,5 @@
-import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
+import { filesize } from 'filesize';
+import moment from 'moment';
 
 export function formatInteger(value: number): string {
 	// Handle small numbers and zero
@@ -20,18 +21,14 @@ export function formatInteger(value: number): string {
 	return `${sign}${rounded}${units[unitIndex]}`;
 }
 
-export function formatDuration(seconds: number): string {
-	const langService: HumanizeDurationLanguage = new HumanizeDurationLanguage();
-	const humanizer: HumanizeDuration = new HumanizeDuration(langService);
+export function formatTimeAgo(date: Date | string): string {
+	const m = moment(date);
+	m.fromNow();
 
-	return humanizer.humanize(seconds * 1000);
+	return `${m.fromNow()} ago`;
 }
 
-export function formatDateDuration(start: Date, end: Date): string {
-	const seconds = Math.floor((end.getTime() - start.getTime()) / 1000);
-	return formatDuration(seconds);
-}
-
-export function formatTimeAgo(date: Date): string {
-	return `${formatDateDuration(date, new Date())} ago`;
+// TODO: reuse all existing usages of filesize with this function
+export function formatFileSize(bytes: number, round: number = 2): string {
+	return filesize(bytes, { round });
 }
