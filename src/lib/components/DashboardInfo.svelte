@@ -1,13 +1,13 @@
 <script lang="ts">
 	// @ts-ignore
-	const version = __COMMIT_HASH__;
+	const version = __VERSION__;
 </script>
 
 <div class="dashboard-info">
 	<a
 		href="https://github.com/Kellojo/Modular-Homelab-Dashboard"
 		target="_blank"
-		rel="noopener noreferrer">Kellojo/Modular-Homelab-Dashboard #{version}</a
+		rel="noopener noreferrer">Kellojo/Modular-Homelab-Dashboard v{version}</a
 	>
 </div>
 
