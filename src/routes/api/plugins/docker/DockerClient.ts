@@ -1,5 +1,5 @@
 import * as si from 'systeminformation';
-import { formatFileSize } from '$lib/server/Formatter';
+import { formatFileSize } from '$lib/common/Formatter';
 
 export default class DockerClient {
 	public async getContainerCount(): Promise<number> {

@@ -1,4 +1,4 @@
-import { formatInteger } from '$lib/server/Formatter';
+import { formatInteger } from '$lib/common/Formatter';
 import { createPassThroughHistoryEndpoint } from '$lib/server/PassThroughWidgetDataEndpoint';
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';

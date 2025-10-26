@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatTime } from '$lib/common/Formatter';
 	import type { DataWidgetResponse, FillDataWidgetValue } from '../../types/DataWidgetValueTypes';
 	import DataWidget from '../DataWidget.svelte';
 
@@ -28,18 +29,24 @@
 
 {#snippet content()}
 	<div class="history">
-		{#each history as entry}
-			<div
-				style="height: {(((entry.value.value as number) - minValue) / (maxValue - minValue)) *
-					100}%;"
-				class={['historyEntry', entry.value.classification]}
-				title={entry.value.tooltip}
-			></div>
+		{#each history as entry, i}
+			<div class="historyEntryContainer">
+				<div
+					style="height: {(((entry.value.value as number) - minValue) / (maxValue - minValue)) *
+						100}%;"
+					class={['historyEntry', entry.value.classification]}
+					title={entry.value.tooltip}
+				></div>
+
+				<div class="bar-label">
+					{#if i % 10 === 0}{formatTime(entry.timestamp)}{/if}
+				</div>
+			</div>
 		{/each}
 	</div>
 {/snippet}
 
-<DataWidget {...props} {subtitle} {applyResults} {content}></DataWidget>
+<DataWidget {...props} disableBottomPadding={true} {subtitle} {applyResults} {content}></DataWidget>
 
 <style>
 	.history {
@@ -52,11 +59,39 @@
 		height: 100%;
 	}
 
+	.historyEntryContainer {
+		width: 0.375rem;
+		flex-shrink: 0;
+		height: 100%;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
 	.historyEntry {
-		min-width: 0.375rem;
 		height: 100%;
 		border-radius: 0.25rem;
 		transition: height 0.2s ease-in;
+		position: relative;
+	}
+
+	.bar-label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 1rem;
+		font-size: 0.625rem;
+		color: var(--secondaryText);
+		flex-shrink: 0;
+		transform: translateY(2px);
+
+		opacity: 0;
+		transition: opacity 0.1s ease-in;
+	}
+
+	.history:hover .bar-label {
+		opacity: 1;
 	}
 
 	.success {

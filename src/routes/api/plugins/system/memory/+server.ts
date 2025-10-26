@@ -2,7 +2,7 @@ import * as si from 'systeminformation';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import { getValueStateLIB } from '$lib/types/valueState';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
-import { formatFileSize } from '$lib/server/Formatter';
+import { formatFileSize } from '$lib/common/Formatter';
 
 export const GET = createWidgetEndpoint('system/memory', async (): Promise<FillDataWidgetValue> => {
 	const mem = await si.mem();

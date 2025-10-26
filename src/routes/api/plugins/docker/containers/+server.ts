@@ -1,4 +1,4 @@
-import { formatTimeAgo } from '$lib/server/Formatter';
+import { formatTimeAgo } from '$lib/common/Formatter';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue, ListDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';

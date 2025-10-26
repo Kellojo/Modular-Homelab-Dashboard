@@ -3,7 +3,7 @@ import type { FillDataWidgetValue, ListDataWidgetValue } from '$lib/types/DataWi
 import { ValueState } from '$lib/types/valueState';
 import type { Systeminformation } from 'systeminformation';
 import DockerClient from '../DockerClient';
-import { formatFileSize, formatTimeAgo } from '$lib/server/Formatter';
+import { formatFileSize, formatTimeAgo } from '$lib/common/Formatter';
 
 export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListDataWidgetValue> => {
 	const dockerClient = new DockerClient();

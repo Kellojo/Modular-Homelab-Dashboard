@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-
 	let {
 		title = '',
 		subtitle = '',
@@ -9,7 +7,8 @@
 		content,
 		url = '',
 		icon,
-		enableContentScrolling = false
+		enableContentScrolling = false,
+		disableBottomPadding = false
 	} = $props();
 
 	const MAX_WIDTH = 2;
@@ -27,7 +26,7 @@
 </script>
 
 <div
-	class="widget"
+	class="widget {disableBottomPadding ? 'disableBottomPadding' : ''}"
 	class:clickable={!!url}
 	style="grid-column: span {width}; grid-row: span {height};"
 	{onclick}
@@ -75,6 +74,10 @@
 		gap: 0.25rem;
 
 		transition: border-color 0.1s ease-out;
+	}
+
+	.widget.disableBottomPadding {
+		padding-bottom: 0;
 	}
 
 	.enableContentScrolling {

@@ -28,6 +28,11 @@ export function formatTimeAgo(date: Date | string): string {
 	return `${m.fromNow()} ago`;
 }
 
+export function formatTime(date: Date | string): string {
+	const m = moment(date);
+	return m.format('HH:mm');
+}
+
 export function formatFileSize(bytes: number, round: number = 2): string {
 	return filesize(bytes, { round });
 }

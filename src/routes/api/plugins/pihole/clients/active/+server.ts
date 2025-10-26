@@ -1,4 +1,4 @@
-import { formatInteger } from '$lib/server/Formatter';
+import { formatInteger } from '$lib/common/Formatter';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
