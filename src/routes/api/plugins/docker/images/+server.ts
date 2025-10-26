@@ -14,12 +14,13 @@ export const GET = createWidgetEndpoint('docker/images', async (): Promise<ListD
 	images.forEach((image) => {
 		const classification = getImageStateClassification(image);
 		let status = classification === ValueState.Success ? 'In use' : 'Not in use';
-		let tooltip = `${status}\nCreated ${formatTimeAgo(new Date(image.created * 1000))}\n${formatFileSize(image.size)}`;
 
 		let imageName = 'N/A';
 		if (image.repoTags && image.repoTags.length > 0) {
 			imageName = image.repoTags.join(', ');
 		}
+
+		let tooltip = `${imageName}\n${status}\nCreated ${formatTimeAgo(new Date(image.created * 1000))}\n${formatFileSize(image.size)}`;
 
 		items.push({
 			displayValue: imageName,
