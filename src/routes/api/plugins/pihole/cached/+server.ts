@@ -6,10 +6,10 @@ import { PiholeClient } from '../PiholeClient';
 
 export const GET = createPassThroughHistoryEndpoint('pihole/cached', async () => {
 	const piholeClient = new PiholeClient();
-	const stats = await piholeClient.getHistory();
+	const history = await piholeClient.getHistory();
 	const piholeUrl = await piholeClient.getPiholeUrl();
 
-	const current = stats.history.reduce((res, entry) => res + entry.cached, 0);
+	const current = history.reduce((res, entry) => res + entry.cached, 0);
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: {
@@ -20,7 +20,7 @@ export const GET = createPassThroughHistoryEndpoint('pihole/cached', async () =>
 			url: piholeUrl || undefined,
 			tooltip: `Total cached DNS requests: ${formatInteger(current)}`
 		},
-		history: stats.history.map((entry) => {
+		history: history.map((entry) => {
 			const timestamp = new Date(entry.timestamp * 1000);
 			const displayValue = formatInteger(entry.cached);
 			return {

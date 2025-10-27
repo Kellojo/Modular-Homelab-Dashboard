@@ -1,3 +1,4 @@
+import { logError } from '$lib/common/Logger';
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { json, type RequestHandler } from '@sveltejs/kit';
 
@@ -39,7 +40,7 @@ export function createWidgetEndpoint(
 
 			return json(response);
 		} catch (err: any) {
-			console.error(`Error in widget ${name}:`, err);
+			logError(`Error in widget ${name}: ${err}`, 'WIDGET');
 			return json({ error: err.message }, { status: 500 });
 		}
 	};

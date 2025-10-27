@@ -1,3 +1,4 @@
+import { logError } from '$lib/common/Logger';
 import getConfig from '../lib/server/Config';
 import { error } from '@sveltejs/kit';
 
@@ -6,7 +7,7 @@ export async function load() {
 		const data = await getConfig();
 		return data;
 	} catch (e) {
-		console.error('Error reading dashboard.yaml:', e);
+		logError(`Error reading dashboard.yaml: ${e}`, 'CONFIG');
 		if (e instanceof Error) return error(500, e.message);
 		return error(500, 'Unknown error');
 	}

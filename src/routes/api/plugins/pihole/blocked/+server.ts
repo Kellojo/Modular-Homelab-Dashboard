@@ -6,10 +6,10 @@ import { PiholeClient } from '../PiholeClient';
 
 export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () => {
 	const piholeClient = new PiholeClient();
-	const stats = await piholeClient.getHistory();
+	const history = await piholeClient.getHistory();
 	const piholeUrl = await piholeClient.getPiholeUrl();
 
-	const current = stats.history.reduce((res, entry) => res + entry.blocked, 0);
+	const current = history.reduce((res, entry) => res + entry.blocked, 0);
 
 	const currentDisplayValue = formatInteger(current);
 
@@ -22,7 +22,7 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 			url: piholeUrl || undefined,
 			tooltip: `Total blocked ads: ${currentDisplayValue}`
 		},
-		history: stats.history.map((entry) => {
+		history: history.map((entry) => {
 			const displayValue = formatInteger(entry.blocked);
 			const timestamp = new Date(entry.timestamp * 1000);
 			return {

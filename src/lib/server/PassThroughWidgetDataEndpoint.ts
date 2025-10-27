@@ -4,6 +4,7 @@ import {
 	StandardWidgetDataEndpointOptions,
 	type WidgetResponseFn
 } from './StandardWidgetDataEndpoint';
+import { logError } from '$lib/common/Logger';
 
 export function createPassThroughHistoryEndpoint(
 	name: string,
@@ -16,7 +17,7 @@ export function createPassThroughHistoryEndpoint(
 			return json(response);
 		} catch (err: any) {
 			if (err instanceof Error) {
-				console.error(`Error in widget ${name}: ${err.message}`);
+				logError(`Error in widget ${name}: ${err.message}`, 'WIDGET');
 			}
 			return json({ error: err.message }, { status: 500 });
 		}

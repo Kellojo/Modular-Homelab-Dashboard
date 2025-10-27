@@ -1,4 +1,5 @@
 import { env } from '$env/dynamic/private';
+import { logInfo, logSuccess } from '$lib/common/Logger';
 import getConfig from '$lib/server/Config';
 
 let sid: string | null = null;
@@ -14,13 +15,13 @@ export class PiholeClient {
 		}
 
 		if (authPromise) {
-			console.log('Authentication already in progress, waiting...');
+			logInfo('Authentication already in progress, waiting...', 'PIHOLE');
 			return authPromise;
 		}
 
 		authPromise = (async () => {
 			try {
-				console.log('Not authenticated with Pi-hole API, attempting to authenticate...');
+				logInfo('Not authenticated with Pi-hole API, attempting to authenticate...', 'PIHOLE');
 				const authUrl = await this.getPiholeApiUrl('/api/auth');
 
 				const response = await fetch(authUrl, {
@@ -45,7 +46,7 @@ export class PiholeClient {
 
 				sid = data.session.sid;
 				sidExpiry = new Date(Date.now() + data.session.validity * 1000);
-				console.log('Successfully authenticated with Pi-hole API.');
+				logSuccess('Successfully authenticated with Pi-hole API.', 'PIHOLE');
 			} finally {
 				authPromise = null;
 			}
@@ -54,13 +55,38 @@ export class PiholeClient {
 		return authPromise;
 	}
 
+	async logOut(): Promise<void> {
+		if (sid === null) {
+			sid = null;
+			sidExpiry = null;
+			return;
+		}
+
+		try {
+			const logoutUrl = await this.getPiholeApiUrl('/api/auth');
+			await fetch(logoutUrl, {
+				method: 'DELETE',
+				headers: {
+					sid: `${sid}`
+				}
+			});
+			logInfo('Logged out from Pi-hole API, cleared SID.', 'PIHOLE');
+		} catch (e) {
+			logError(`Error logging out from Pi-hole API: ${e}`, 'PIHOLE');
+		}
+
+		sid = null;
+		sidExpiry = null;
+	}
+
 	async isAuthenticated(): Promise<boolean> {
 		if (sid === null) return false;
 
 		if (sidExpiry && new Date() >= sidExpiry) {
+			await this.logOut();
 			sid = null;
 			sidExpiry = null;
-			console.log('Pi-hole session has expired, cleared SID.');
+			logInfo('Pi-hole session has expired, cleared SID.', 'PIHOLE');
 			return false;
 		}
 
@@ -76,12 +102,13 @@ export class PiholeClient {
 				if (!data.session.valid) {
 					sid = null;
 					sidExpiry = null;
-					console.log('Pi-hole session not valid, cleared SID.');
+					logInfo('Pi-hole session not valid, cleared SID.', 'PIHOLE');
 					return false;
 				}
 				return data.session.valid;
 			}
 		} catch (error) {
+			await this.logOut();
 			sid = null;
 			sidExpiry = null;
 		}
@@ -107,6 +134,25 @@ export class PiholeClient {
 		return new URL('/admin', piholeUrl).toString();
 	}
 
+	async getPiholeSessionCount(): Promise<number> {
+		await this.authenticate();
+
+		const apiUrl = await this.getPiholeApiUrl('/api/auth/sessions');
+		const response = await fetch(apiUrl, {
+			headers: {
+				sid: `${sid}`
+			}
+		});
+
+		if (!response.ok) {
+			throw new Error(
+				`Error fetching Pi-hole session count: ${response.status} ${response.statusText}`
+			);
+		}
+		const data = (await response.json()) as PiholeSessionResponse;
+		return data.sessions.length;
+	}
+
 	async getStatsSummary(): Promise<PiholeStatsSummaryResponse> {
 		await this.authenticate();
 
@@ -125,7 +171,7 @@ export class PiholeClient {
 		return (await response.json()) as PiholeStatsSummaryResponse;
 	}
 
-	async getHistory(): Promise<PiholeHistoryResponse> {
+	async getHistory(): Promise<PiholeHistoryEntry[]> {
 		await this.authenticate();
 		const apiUrl = await this.getPiholeApiUrl('/api/history');
 		const response = await fetch(apiUrl, {
@@ -137,7 +183,39 @@ export class PiholeClient {
 		if (!response.ok) {
 			throw new Error(`Error fetching Pi-hole history: ${response.status} ${response.statusText}`);
 		}
-		return (await response.json()) as PiholeHistoryResponse;
+
+		const history = (await response.json()) as PiholeHistoryResponse;
+		return this.aggregateHistoryDataByHour(history);
+	}
+
+	private aggregateHistoryDataByHour(response: PiholeHistoryResponse): PiholeHistoryEntry[] {
+		const hourlyMap = new Map<number, PiholeHistoryEntry>();
+
+		for (const entry of response.history) {
+			// Convert timestamp to Date and truncate to the hour
+			const date = new Date(entry.timestamp * 1000); // adjust if already ms
+			date.setMinutes(0, 0, 0);
+			const hourTimestamp = Math.floor(date.getTime() / 1000);
+
+			// Aggregate values by hour
+			if (!hourlyMap.has(hourTimestamp)) {
+				hourlyMap.set(hourTimestamp, {
+					timestamp: hourTimestamp,
+					total: 0,
+					cached: 0,
+					blocked: 0,
+					forwarded: 0
+				});
+			}
+
+			const agg = hourlyMap.get(hourTimestamp)!;
+			agg.total += entry.total;
+			agg.cached += entry.cached;
+			agg.blocked += entry.blocked;
+			agg.forwarded += entry.forwarded;
+		}
+
+		return Array.from(hourlyMap.values()).sort((a, b) => a.timestamp - b.timestamp);
 	}
 }
 
@@ -164,11 +242,17 @@ interface PiholeStatsSummaryResponse {
 }
 
 interface PiholeHistoryResponse {
-	history: Array<{
-		timestamp: number;
-		total: number;
-		cached: number;
-		blocked: number;
-		forwarded: number;
-	}>;
+	history: Array<PiholeHistoryEntry>;
+}
+
+interface PiholeHistoryEntry {
+	timestamp: number;
+	total: number;
+	cached: number;
+	blocked: number;
+	forwarded: number;
+}
+
+interface PiholeSessionResponse {
+	sessions: object[];
 }

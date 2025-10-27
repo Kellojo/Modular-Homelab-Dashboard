@@ -6,10 +6,10 @@ import { PiholeClient } from '../PiholeClient';
 
 export const GET = createPassThroughHistoryEndpoint('pihole/forwarded', async () => {
 	const piholeClient = new PiholeClient();
-	const stats = await piholeClient.getHistory();
+	const history = await piholeClient.getHistory();
 	const piholeUrl = await piholeClient.getPiholeUrl();
 
-	const current = stats.history.reduce((res, entry) => res + entry.forwarded, 0);
+	const current = history.reduce((res, entry) => res + entry.forwarded, 0);
 	const currentDisplayValue = formatInteger(current);
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
@@ -21,7 +21,7 @@ export const GET = createPassThroughHistoryEndpoint('pihole/forwarded', async ()
 			url: piholeUrl || undefined,
 			tooltip: `Total forwarded DNS requests: ${currentDisplayValue}`
 		},
-		history: stats.history.map((entry) => {
+		history: history.map((entry) => {
 			const timestamp = new Date(entry.timestamp * 1000);
 			return {
 				timestamp: timestamp,

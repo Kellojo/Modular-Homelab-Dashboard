@@ -1,9 +1,9 @@
-// src/lib/server/cron.ts
 import cron from 'node-cron';
 import { performance } from 'node:perf_hooks';
 import getConfig from '$lib/server/Config';
 import { getFullWidgetDataUrl } from '$lib/common/WidgetDataUrl';
 import type { WidgetData } from '$lib/server/Config';
+import { logError, logInfo, logSuccess } from '$lib/common/Logger';
 
 // Prevent multiple schedules during HMR
 if (!(globalThis as any).__documentMetricsCronStarted) {
@@ -14,8 +14,9 @@ if (!(globalThis as any).__documentMetricsCronStarted) {
 
 async function initCron() {
 	const config = await getConfig();
-	console.log(
-		`[CRON] Scheduling document metrics refresh with expression: ${config.config.refreshCron}`
+	logInfo(
+		`Scheduling document metrics refresh with expression: ${config.config.refreshCron}`,
+		'CRON'
 	);
 
 	cron.schedule(config.config.refreshCron, () => documentMetrics(config));
@@ -23,7 +24,7 @@ async function initCron() {
 }
 
 async function documentMetrics(config: Awaited<ReturnType<typeof getConfig>>) {
-	console.log(`[CRON] Refreshing document metrics`);
+	logInfo(`Refreshing document metrics`, 'CRON');
 	performance.mark('start-refresh');
 
 	const promises = config.widgets.map(refreshMetric);
@@ -31,7 +32,7 @@ async function documentMetrics(config: Awaited<ReturnType<typeof getConfig>>) {
 
 	performance.mark('end-refresh');
 	const measure = performance.measure('document-metrics-refresh', 'start-refresh', 'end-refresh');
-	console.log(`[CRON] Finished refreshing all metrics in ${measure.duration.toFixed(0)}ms\n`);
+	logInfo(`Finished refreshing all metrics in ${measure.duration.toFixed(0)}ms`, 'CRON');
 }
 
 async function refreshMetric(widget: WidgetData) {
@@ -46,10 +47,10 @@ async function refreshMetric(widget: WidgetData) {
 		const path = getFullWidgetDataUrl(widget);
 		await fetch(path + '?addToHistory=true');
 	} catch (err) {
-		console.error(`[CRON] Error refreshing widget ${dataPoint}:`, err);
+		logError(`Error refreshing widget ${dataPoint}: ${err}`, 'CRON');
 	}
 
 	performance.mark(endMark);
 	const measure = performance.measure(`refresh-${dataPoint}`, startMark, endMark);
-	console.log(`[CRON] Refreshed widget ${dataPoint} in ${measure.duration.toFixed(0)}ms`);
+	logSuccess(`Refreshed widget ${dataPoint} in ${measure.duration.toFixed(0)}ms`, 'CRON');
 }
