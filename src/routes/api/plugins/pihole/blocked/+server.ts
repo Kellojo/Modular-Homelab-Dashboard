@@ -10,8 +10,9 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 	const piholeUrl = await piholeClient.getPiholeUrl();
 
 	const current = history.reduce((res, entry) => res + entry.blocked, 0);
+	const currentAll = history.reduce((res, entry) => res + entry.total, 0);
 
-	const currentDisplayValue = formatInteger(current);
+	const currentDisplayValue = `${formatInteger(current)} / ${formatInteger(currentAll)}`;
 
 	const response: DataWidgetResponse<FillDataWidgetValue> = {
 		current: {
@@ -20,7 +21,7 @@ export const GET = createPassThroughHistoryEndpoint('pihole/blocked', async () =
 			classification: ValueState.Success,
 			unit: '',
 			url: piholeUrl || undefined,
-			tooltip: `Total blocked ads: ${currentDisplayValue}`
+			tooltip: `Total blocked requests: ${currentDisplayValue}`
 		},
 		history: history.map((entry) => {
 			const displayValue = formatInteger(entry.blocked);
