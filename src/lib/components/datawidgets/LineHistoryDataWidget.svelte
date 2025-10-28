@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { GradientColor } from '$lib/types/Gradient';
+	import { DefaultGradient, type GradientColor } from '$lib/types/Gradient';
 	import type Gradient from '$lib/types/Gradient';
 	import type {
 		DataWidgetResponse,
@@ -58,13 +58,7 @@
 		// Update gradient from backend data if available
 		let gradientData: Gradient | undefined = data.current.gradient;
 		if (gradientData == undefined) {
-			gradientData = {
-				horizontal: true,
-				colors: [
-					{ stop: 0, color: 'var(--successSecondary)' },
-					{ stop: 100, color: 'var(--success)' }
-				]
-			};
+			gradientData = DefaultGradient;
 		}
 
 		const defs = svg.select('defs');

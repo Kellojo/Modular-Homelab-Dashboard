@@ -2,6 +2,7 @@ import { getValueStateLIB } from '../../../../../../lib/types/valueState';
 import * as si from 'systeminformation';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
+import { CpuLoadGradient } from '$lib/types/Gradient';
 
 export const GET = createWidgetEndpoint(
 	'system/cpu/load',
@@ -15,7 +16,8 @@ export const GET = createWidgetEndpoint(
 			unit: '%',
 			min: 0,
 			max: 100,
-			tooltip: `${new Date().toLocaleString()}: ${displayValue}%`
+			tooltip: `${new Date().toLocaleString()}: ${displayValue}%`,
+			gradient: CpuLoadGradient
 		};
 	}
 );
