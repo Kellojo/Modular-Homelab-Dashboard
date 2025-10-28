@@ -1,6 +1,7 @@
 import { getValueStateLIB } from '../../../../../../lib/types/valueState';
 import * as si from 'systeminformation';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
+import { TemperatureGradient } from '$lib/types/Gradient';
 
 export const GET = createWidgetEndpoint('system/cpu/temperature', async () => {
 	const cpuTemperature = await si.cpuTemperature();
@@ -12,6 +13,7 @@ export const GET = createWidgetEndpoint('system/cpu/temperature', async () => {
 		displayValue: `${displayValue} °C`,
 		min: 0,
 		max: 100,
-		tooltip: `${new Date().toLocaleString()}: ${displayValue} °C`
+		tooltip: `${new Date().toLocaleString()}: ${displayValue} °C`,
+		gradient: TemperatureGradient
 	};
 });

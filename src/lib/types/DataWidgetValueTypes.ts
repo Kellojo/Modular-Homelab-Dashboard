@@ -1,3 +1,4 @@
+import type Gradient from './Gradient';
 import type { ValueState } from './valueState';
 
 export interface TextDataWidgetValue {
@@ -15,11 +16,12 @@ export interface FillDataWidgetValue {
 	unit: string;
 	min?: number;
 	max?: number;
+	gradient?: Gradient;
 }
 
 export interface ListDataWidgetValue {
-    displayValue: string;
-    items: FillDataWidgetValue[];
+	displayValue: string;
+	items: FillDataWidgetValue[];
 }
 
 export interface DataWidgetResponse<T> {

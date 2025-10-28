@@ -31,6 +31,9 @@
 	--error: hsl(0, 80%, 60%);
 	--errorSecondary: hsl(0, 80%, 20%);
 
+    --info: hsl(204, 100%, 50%);
+    --infoSecondary: hsl(204, 100%, 15%);
+
 	--cellSize: 128px;
 	--cellGap: 1rem;
 }

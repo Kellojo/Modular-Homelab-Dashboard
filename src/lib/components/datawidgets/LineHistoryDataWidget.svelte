@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ValueState } from '$lib/types/valueState';
+	import type { GradientColor } from '$lib/types/Gradient';
+	import type Gradient from '$lib/types/Gradient';
 	import type {
 		DataWidgetResponse,
 		FillDataWidgetValue,
@@ -22,19 +23,8 @@
 	onMount(() => {
 		svg = d3.select(chart).attr('width', chartWidth).attr('height', chartHeight);
 
-		// Create gradient definition
-		const defs = svg.append('defs');
-		const gradient = defs
-			.append('linearGradient')
-			.attr('id', 'line-gradient')
-			.attr('x1', '0%')
-			.attr('y1', '0%')
-			.attr('x2', '100%')
-			.attr('y2', '0%');
-
-		gradient.append('stop').attr('offset', '0%').attr('stop-color', 'var(--successSecondary)');
-
-		gradient.append('stop').attr('offset', '100%').attr('stop-color', 'var(--success)');
+		// Create defs container for gradients
+		svg.append('defs');
 
 		curveFunc = d3
 			.line<DataWidgetResponseHistoryPoint<FillDataWidgetValue>>()
@@ -64,6 +54,36 @@
 	function applyResults(data: DataWidgetResponse<FillDataWidgetValue>) {
 		subtitle = props.subtitle || data.current.displayValue;
 		const consideredHistory = data.history.slice(-maxPointCount + 1);
+
+		// Update gradient from backend data if available
+		let gradientData: Gradient | undefined = data.current.gradient;
+		if (gradientData == undefined) {
+			gradientData = {
+				horizontal: true,
+				colors: [
+					{ stop: 0, color: 'var(--successSecondary)' },
+					{ stop: 100, color: 'var(--success)' }
+				]
+			};
+		}
+
+		const defs = svg.select('defs');
+
+		// Remove existing gradient
+		defs.select('#line-gradient').remove();
+
+		const g = defs
+			.append('linearGradient')
+			.attr('id', 'line-gradient')
+			.attr('gradientUnits', 'userSpaceOnUse');
+		if (gradientData.horizontal) {
+			g.attr('x1', 0).attr('y1', 0).attr('x2', chartWidth).attr('y2', 0);
+		} else {
+			g.attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', chartHeight);
+		}
+		gradientData.colors.forEach((color: GradientColor) => {
+			g.append('stop').attr('offset', `${color.stop}%`).attr('stop-color', color.color);
+		});
 
 		path.attr('d', curveFunc(consideredHistory));
 	}
