@@ -13,10 +13,9 @@
 
 <style>
 	.dashboard-info {
-		position: fixed;
 		bottom: 0;
 		width: 100%;
-		text-align: left;
+		text-align: center;
 		padding: 0.5rem;
 		box-sizing: border-box;
 		font-size: 0.625rem;
