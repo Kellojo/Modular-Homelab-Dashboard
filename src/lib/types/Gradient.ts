@@ -11,7 +11,7 @@ export interface GradientColor {
 
 export const DefaultGradient: Gradient = {
 	colors: [
-		{ color: 'var(--successSecondary)', stop: 0 },
+		{ color: 'var(--success)', stop: 0 },
 		{ color: 'var(--success)', stop: 100 }
 	],
 	horizontal: true

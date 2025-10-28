@@ -46,7 +46,8 @@
 			.append('path')
 			.attr('fill', 'none')
 			.attr('stroke', 'url(#line-gradient)')
-			.attr('stroke-width', 2);
+			.attr('stroke-width', 2)
+			.attr('mask', 'url(#fade-mask)');
 	});
 
 	const maxPointCount = 64;
@@ -63,20 +64,66 @@
 
 		const defs = svg.select('defs');
 
-		// Remove existing gradient
+		// Remove existing gradients
 		defs.select('#line-gradient').remove();
+		defs.select('#opacity-gradient').remove();
 
-		const g = defs
+		// Create the color gradient
+		const colorGradient = defs
+			.append('linearGradient')
+			.attr('id', 'color-gradient')
+			.attr('gradientUnits', 'userSpaceOnUse');
+		if (gradientData.horizontal) {
+			colorGradient.attr('x1', 0).attr('y1', 0).attr('x2', chartWidth).attr('y2', 0);
+		} else {
+			colorGradient.attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', chartHeight);
+		}
+		gradientData.colors.forEach((color: GradientColor) => {
+			colorGradient.append('stop').attr('offset', `${color.stop}%`).attr('stop-color', color.color);
+		});
+
+		// Create the opacity gradient (fade from right to left)
+		const opacityGradient = defs
+			.append('linearGradient')
+			.attr('id', 'opacity-gradient')
+			.attr('gradientUnits', 'userSpaceOnUse')
+			.attr('x1', 0)
+			.attr('y1', 0)
+			.attr('x2', chartWidth)
+			.attr('y2', 0);
+
+		opacityGradient
+			.append('stop')
+			.attr('offset', '0%')
+			.attr('stop-color', 'white')
+			.attr('stop-opacity', 0.25);
+		opacityGradient
+			.append('stop')
+			.attr('offset', '100%')
+			.attr('stop-color', 'white')
+			.attr('stop-opacity', 1);
+
+		// Create a mask that combines both gradients
+		const mask = defs.append('mask').attr('id', 'fade-mask');
+
+		mask
+			.append('rect')
+			.attr('width', chartWidth)
+			.attr('height', chartHeight)
+			.attr('fill', 'url(#opacity-gradient)');
+
+		// Create the final gradient that will be used by the path
+		const finalGradient = defs
 			.append('linearGradient')
 			.attr('id', 'line-gradient')
 			.attr('gradientUnits', 'userSpaceOnUse');
 		if (gradientData.horizontal) {
-			g.attr('x1', 0).attr('y1', 0).attr('x2', chartWidth).attr('y2', 0);
+			finalGradient.attr('x1', 0).attr('y1', 0).attr('x2', chartWidth).attr('y2', 0);
 		} else {
-			g.attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', chartHeight);
+			finalGradient.attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', chartHeight);
 		}
 		gradientData.colors.forEach((color: GradientColor) => {
-			g.append('stop').attr('offset', `${color.stop}%`).attr('stop-color', color.color);
+			finalGradient.append('stop').attr('offset', `${color.stop}%`).attr('stop-color', color.color);
 		});
 
 		path.attr('d', curveFunc(consideredHistory));
