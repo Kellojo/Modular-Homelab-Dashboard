@@ -82,32 +82,38 @@
 			colorGradient.append('stop').attr('offset', `${color.stop}%`).attr('stop-color', color.color);
 		});
 
-		// Create the opacity gradient (fade from right to left)
+		// Create the opacity gradient (fade from line start to end)
+		const dataPointCount = consideredHistory.length;
+		const lineStartX = dataPointCount > 1 ? 0 : chartWidth / 2; // Start at 0 if we have multiple points
+		const lineEndX = dataPointCount > 1 ? (dataPointCount - 1) * (chartWidth / (maxPointCount - 1)) : chartWidth / 2;
+		
 		const opacityGradient = defs
 			.append('linearGradient')
 			.attr('id', 'opacity-gradient')
 			.attr('gradientUnits', 'userSpaceOnUse')
-			.attr('x1', 0)
+			.attr('x1', lineStartX)
 			.attr('y1', 0)
-			.attr('x2', chartWidth)
+			.attr('x2', lineEndX)
 			.attr('y2', 0);
 
 		opacityGradient
 			.append('stop')
 			.attr('offset', '0%')
 			.attr('stop-color', 'white')
-			.attr('stop-opacity', 0.25);
+			.attr('stop-opacity', 0.1);
 		opacityGradient
 			.append('stop')
 			.attr('offset', '100%')
 			.attr('stop-color', 'white')
 			.attr('stop-opacity', 1);
 
-		// Create a mask that combines both gradients
+		// Create a mask that follows the line's actual span
 		const mask = defs.append('mask').attr('id', 'fade-mask');
 
 		mask
 			.append('rect')
+			.attr('x', 0)
+			.attr('y', 0)
 			.attr('width', chartWidth)
 			.attr('height', chartHeight)
 			.attr('fill', 'url(#opacity-gradient)');
