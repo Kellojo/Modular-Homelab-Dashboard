@@ -1,32 +1,66 @@
-# sv
+# Modular Homelab Dashboard
+This project is a modular dashboard designed for managing and monitoring a homelab environment. It provides a customizable interface to display various metrics, system statuses, and other relevant information about your homelab.
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+All configured in a simple yaml file with a backend to securely fetch data from your homelab services, without exposing credentials/API keys to the frontend.
 
-## Docker Compose
+![Dashboard Screenshot](https://raw.githubusercontent.com/Kellojo/Modular-Homelab-Dashboard/refs/heads/docs/images/preview.png)
+
+## Features
+- Modular design: Easily add or remove widgets to customize your dashboard.
+- Secure backend: Fetch data securely from your homelab services without exposing sensitive information.
+- YAML configuration: Simple and intuitive configuration using a YAML file.
+- Responsive design: Works well on various screen sizes and devices, even your phone!
+- Provides widgets for popular homelab services like Pi-hole, Docker, Gitea and many more.
+- Easily extendable: integrate your own services by following the integration guide.
+
+## Getting Started
+Docker Compose is the recommended way to run the Modular Homelab Dashboard. Make sure you have Docker and Docker Compose installed on your system.
+
+Add the following service to your existing `docker-compose.yaml` file:
 
 ```yaml
-- pid: 'host'
+services:
+  modular-homelab-dashboard:
+    image: ghcr.io/kellojo/modular-homelab-dashboard:v1.1.4
+    container_name: modular-homelab-dashboard
+    restart: unless-stopped
+    pid: "host"
+    volumes:
+      - ./config.yaml:/app/dashboard.yaml:ro                    # your dashboard config
+      - ./background.jpg:/app/build/client/background.jpg:ro    # optional custom background
 ```
 
-## Developing
+Create a `config.yaml` file and mount it to `/app/dashboard.yaml` in the container:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```yaml
+plugins:
+  uptimekuma:
+    url: http://192.168.178.100:3000
 
-```sh
-npm run dev
+widgets:
+  - type: title
+    title: System Status
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+  - type: datawidget
+    subtype: line
+    title: CPU
+    datasource: system
+    datapoint: cpu.load
+
+  - type: title
+    title: Apps
+
+  - type: link
+    url: https://pihole.local/admin
+    title: Pi-hole
+    icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pi-hole.png
+    width: 2
 ```
 
-## Building
+## Plugins
 
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- System Metrics
+- Docker
+- Pi-hole
+- Uptime Kuma
+- Gitea
