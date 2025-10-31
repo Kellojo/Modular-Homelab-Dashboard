@@ -5,7 +5,7 @@ All configured in a simple yaml file with a backend to securely fetch data from 
 
 ![Dashboard Screenshot](https://raw.githubusercontent.com/Kellojo/Modular-Homelab-Dashboard/refs/heads/docs/images/preview.png)
 
-## Features
+## ✨ Features
 - Modular design: Easily add or remove widgets to customize your dashboard.
 - Secure backend: Fetch data securely from your homelab services without exposing sensitive information.
 - YAML configuration: Simple and intuitive configuration using a YAML file.
@@ -13,7 +13,7 @@ All configured in a simple yaml file with a backend to securely fetch data from 
 - Provides widgets for popular homelab services like Pi-hole, Docker, Gitea and many more.
 - Easily extendable: integrate your own services by following the integration guide.
 
-## Getting Started
+## 🚀 Getting Started
 Docker Compose is the recommended way to run the Modular Homelab Dashboard. Make sure you have Docker and Docker Compose installed on your system.
 
 Add the following service to your existing `docker-compose.yaml` file:
@@ -57,8 +57,7 @@ widgets:
     width: 2
 ```
 
-## Plugins
-
+## 🔌 Plugins
 - System Metrics
 - Docker
 - Pi-hole
