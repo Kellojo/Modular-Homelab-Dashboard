@@ -3,7 +3,7 @@ This project is a modular dashboard designed for managing and monitoring a homel
 
 All configured in a simple yaml file with a backend to securely fetch data from your homelab services, without exposing credentials/API keys to the frontend.
 
-![Dashboard Screenshot](https://raw.githubusercontent.com/Kellojo/Modular-Homelab-Dashboard/refs/heads/docs/images/preview.png)
+![Dashboard Screenshot](https://github.com/Kellojo/Modular-Homelab-Dashboard/blob/docs/docs/images/preview.png?raw=true)
 
 ## ✨ Features
 - Modular design: Easily add or remove widgets to customize your dashboard.
