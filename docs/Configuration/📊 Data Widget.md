@@ -19,10 +19,12 @@ By default the data will be refreshed every 10 seconds and a history of up to 10
 | `datapoint`   | Yes      | The specific data point to display (i.e.cpu.temperature, memory, ...)                                    |
 | `datafilters` | No       | The data filter to apply, some plugins might require or support a specific filter to be supplied.        |
 | `title`       | Yes      | The title to display                                                                                     |
-| `subtitle`    | No       | The subtitle to display                                                                                  |
+| `subtitle`    | No       | The subtitle to display, in most cases this will be set by the plugin                                    |
 | `url`         | No       | The URL to navigate to when the tile is clicked.                                                         |
 | `width`       | No       | The width of the tile (e.g., 1, 2).                                                                      |
 | `height`      | No       | The height of the tile (e.g., 1, 2).                                                                     |
+| `icon`        | No       | The icon to display in the tile.                                                                         |
+| `iconify`     | No       | The Iconify icon to display in the tile.                                                                 |
 
 ## Configuration Example
 

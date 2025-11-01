@@ -13,10 +13,12 @@ Displays a tile that is clickable and routes the user to a specific link. Requir
 | Property   | Required | Description                                      |
 | ---------- | -------- | ------------------------------------------------ |
 | `title`    | Yes      | The title to display                             |
-| `url`      | Yes      | The URL to navigate to when the tile is clicked. |
+| `url`      | No       | The URL to navigate to when the tile is clicked. |
 | `subtitle` | No       | The subtitle to display                          |
 | `width`    | No       | The width of the tile (e.g., 1, 2).              |
 | `height`   | No       | The height of the tile (e.g., 1, 2).             |
+| `icon`     | No       | The icon to display in the tile.                 |
+| `iconify`  | No       | The Iconify icon to display in the tile.         |
 
 ## Configuration Example
 

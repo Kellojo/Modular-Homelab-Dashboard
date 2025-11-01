@@ -30,12 +30,9 @@ widgets:
 
 The following widget types are currently available:
 
-| Type                                 | Description                                                                                                                                                       |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [title](#Configuration/Title-Widget) | Displays a title for the dashboard or a specific section.                                                                                                         |
-| [link](#Configuration/Link-Widget)   | Displays a tile that is clickable and routes the user to a specific link. Requires the url parameter to be set in addition.                                       |
-| datawidget                           | Displays data that is made available from one of the plugins. The data is pulled through a backend service by specifying the datasource and datapoint properties. |
-
-### Link Widget
-
-### Data Widget
+| Type                                     | Description                                                                                                                                                       |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [title](#Configuration/Title-Widget)     | Displays a title for the dashboard or a specific section.                                                                                                         |
+| [text](#Configuration/Text-Widget)       | Displays a text only widget for the dashboard or a specific section.                                                                                              |
+| [link](#Configuration/Link-Widget)       | Displays a tile that is clickable and routes the user to a specific link. Requires the url parameter to be set in addition.                                       |
+| [datawidget](#Configuration/Data-Widget) | Displays data that is made available from one of the plugins. The data is pulled through a backend service by specifying the datasource and datapoint properties. |
