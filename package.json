@@ -20,6 +20,7 @@
 		"lint": "prettier --check ."
 	},
 	"devDependencies": {
+		"@iconify/svelte": "^5.0.2",
 		"@sveltejs/adapter-auto": "^6.1.0",
 		"@sveltejs/adapter-node": "^5.3.3",
 		"@sveltejs/kit": "^2.43.2",

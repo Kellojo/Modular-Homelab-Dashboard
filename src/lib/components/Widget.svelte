@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Icon from '@iconify/svelte';
+
 	let {
 		title = '',
 		subtitle = '',
@@ -7,6 +9,7 @@
 		content,
 		url = '',
 		icon,
+		iconify = '',
 		enableContentScrolling = false,
 		disableBottomPadding = false
 	} = $props();
@@ -38,6 +41,9 @@
 		<div class="title">
 			{#if icon}
 				<img src={icon} alt="Icon" />
+			{/if}
+			{#if iconify}
+				<Icon icon={iconify} />
 			{/if}
 			<h3>{title}</h3>
 		</div>
