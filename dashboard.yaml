@@ -4,23 +4,7 @@ plugins:
 
 widgets:
   - type: title
-    title: Apps
-
-  - type: title
-    title: System Status
-
-  # Data Widgets
-  #- type: datawidget
-  #  static: true
-  #  title: RAM
-  #  subtitle: 16 GB
-
-  - type: datawidget
-    subtype: statushistory
-    title: Status
-    static: false
-    datasource: uptimekuma
-    datapoint: uptime
+    title: System Plugin
 
   - type: datawidget
     subtype: statushistory
@@ -98,9 +82,22 @@ widgets:
     datapoint: network.totalDown
     width: 1
 
-  # Example for plugin data source
-  #- type: datawidget
-  #  title: CPU
-  #  static: false
-  #  dataType: none | progressbar | linechart | barchart | fill | statusHistory
-  #  datasource: plugin.pihole | plugin.docker
+  - type: title
+    title: Uptime Kuma
+
+  - type: datawidget
+    subtype: statushistory
+    title: Status
+    static: false
+    datasource: uptimekuma
+    datapoint: uptime
+
+  - type: title
+    title: Pi-hole
+
+  - type: datawidget
+    subtype: statushistory
+    title: Status
+    static: false
+    datasource: pihole
+    datapoint: blocked.percentage

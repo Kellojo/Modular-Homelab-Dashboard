@@ -1,10 +1,10 @@
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
-import { PiholeClient } from '../PiholeClient';
+import { PiholeClient } from '../../PiholeClient';
 
 export const GET = createWidgetEndpoint(
-	'pihole/blockedPercentage',
+	'pihole/blocked/percentage',
 	async (): Promise<FillDataWidgetValue> => {
 		const piholeClient = new PiholeClient();
 		const stats = await piholeClient.getStatsSummary();
