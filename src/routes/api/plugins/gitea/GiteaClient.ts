@@ -1,6 +1,5 @@
 import getConfig from '$lib/server/Config';
 import { env } from '$env/dynamic/private';
-import * as si from 'systeminformation';
 
 export default class GiteaClient {
 	constructor() {}
