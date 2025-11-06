@@ -11,7 +11,8 @@
 		icon,
 		iconify = '',
 		enableContentScrolling = false,
-		disableBottomPadding = false
+		disableBottomPadding = false,
+		iconRounded = true
 	} = $props();
 
 	const MAX_WIDTH = 2;
@@ -40,7 +41,7 @@
 	{#if title}
 		<div class="title">
 			{#if icon}
-				<img src={icon} alt="Icon" />
+				<img src={icon} class={iconRounded ? 'rounded' : ''} alt="Icon" />
 			{/if}
 			{#if iconify}
 				<Icon icon={iconify} />
@@ -115,8 +116,11 @@
 		img {
 			max-width: 2rem;
 			max-height: 2rem;
-			border-radius: 0.5rem;
 			opacity: 0.9;
+		}
+
+		.rounded {
+			border-radius: 0.5rem;
 		}
 	}
 
