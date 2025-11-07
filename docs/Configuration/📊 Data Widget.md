@@ -25,6 +25,7 @@ By default the data will be refreshed every 10 seconds and a history of up to 10
 | `height`      | No       | The height of the tile (e.g., 1, 2).                                                                     |
 | `icon`        | No       | The icon to display in the tile.                                                                         |
 | `iconify`     | No       | The Iconify icon to display in the tile.                                                                 |
+| `iconRounded` | No       | Show the icon with rounded corners.                                                                      |
 
 ## Configuration Example
 
