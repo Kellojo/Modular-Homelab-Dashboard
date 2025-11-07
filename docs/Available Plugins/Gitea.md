@@ -46,15 +46,6 @@ widgets:
     datapoint: repos.count
     width: 1
 
-  # Show total number of images
-  - type: datawidget
-    subtype: number
-    title: Total Images
-    datasource: docker
-    datapoint: images.count
-    width: 1
-    height: 1
-
   # Show the user heatmap for a specific user as a barchart
   - type: datawidget
     icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/gitea.png
