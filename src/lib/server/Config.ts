@@ -22,10 +22,13 @@ export default async function getConfig(): Promise<Config> {
 
 		try {
 			const config: Config = yaml.parse(data);
-			if (!config.plugins) config.plugins = { uptimekuma: {}, pihole: {}, gitea: {}, gotify: {} };
+			if (!config.plugins)
+				config.plugins = { uptimekuma: {}, pihole: {}, gitea: {}, gotify: {}, n8n: {} };
 			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
 			if (!config.plugins.pihole) config.plugins.pihole = {};
 			if (!config.plugins.gotify) config.plugins.gotify = {};
+			if (!config.plugins.n8n) config.plugins.n8n = {};
+
 			if (!config.widgets) config.widgets = [];
 			if (!config.config) config.config = { historyLength: 120, refreshCron: '*/5 * * * *' };
 			if (!config.config.historyLength) config.config.historyLength = 120;
@@ -71,6 +74,9 @@ interface Config {
 			url?: string;
 		};
 		gotify: {
+			url?: string;
+		};
+		n8n: {
 			url?: string;
 		};
 		uptimekuma: {
