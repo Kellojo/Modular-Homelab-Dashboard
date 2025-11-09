@@ -12,6 +12,7 @@
 	import Background from '$lib/components/Background.svelte';
 	import StatusListDataWidget from '$lib/components/datawidgets/StatusListDataWidget.svelte';
 	import DashboardInfo from '$lib/components/DashboardInfo.svelte';
+	import HeatmapDataWidget from '$lib/components/datawidgets/HeatmapDataWidget.svelte';
 	const { data } = $props();
 
 	const components = {
@@ -23,6 +24,7 @@
 			bar: BarHistoryDataWidget,
 			progressbar: ProgressWidget,
 			statushistory: StatusHistoryDataWidget,
+			heatmap: HeatmapDataWidget,
 			line: LineHistoryDataWidget,
 			list: StatusListDataWidget
 		}
