@@ -114,8 +114,8 @@
 		align-items: center;
 
 		img {
-			max-width: 2rem;
-			max-height: 2rem;
+			max-width: 1.5rem;
+			max-height: 1.5rem;
 			opacity: 0.9;
 		}
 
