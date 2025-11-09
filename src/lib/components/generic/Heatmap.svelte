@@ -94,6 +94,10 @@
 		height: 5px;
 		background-color: var(--backgroundLight);
 		border-radius: 1px;
+
+		transition:
+			background-color 0.2s ease-in,
+			opacity 0.2s ease-in;
 	}
 
 	.success {
