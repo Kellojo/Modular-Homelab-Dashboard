@@ -7,7 +7,9 @@ import N8nClient, { type N8nExecution } from '../N8nClient';
 import { N8nExecutionStatus } from '../N8nClient';
 
 export const GET = createPassThroughHistoryEndpoint('n8n/executions', async (url) => {
-	const since = getDateDaysAgo(14);
+	const sinceDays = url.searchParams.get('since');
+
+	const since = getDateDaysAgo(Number(sinceDays) || 14);
 	const n8nClient = new N8nClient();
 	const executions = await n8nClient.getAllExecutions(since);
 
