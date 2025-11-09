@@ -46,6 +46,7 @@ The following subtypes are supported for the data widget:
 - line
 - bar
 - statushistory
+- heatmap
 - progressbar
 - list
 - fill
@@ -54,4 +55,4 @@ Below you can see some of them in action:
 
 ![Widget Overview](../images/widgets/overview.png)
 
-You can find usage examples for the widgets here.
+You can find usage examples for the widgets [here](https://github.com/Kellojo/Modular-Homelab-Dashboard/blob/main/dashboard.yaml).
