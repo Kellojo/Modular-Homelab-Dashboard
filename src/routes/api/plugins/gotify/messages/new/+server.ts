@@ -1,4 +1,5 @@
 import { formatDate, getDateDaysAgo } from '$lib/common/Date';
+import { formatInteger } from '$lib/common/Formatter';
 import { createPassThroughHistoryEndpoint } from '$lib/server/PassThroughWidgetDataEndpoint';
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
@@ -49,8 +50,8 @@ function getWidgetValue(messages: GotifyMessage[], day: string, url: string): Fi
 		value: overall,
 		classification: overall > 0 ? ValueState.Success : ValueState.Unknown,
 		unit: 'Messages',
-		displayValue: `${overall} ${overall === 1 ? 'message' : 'messages'}`,
+		displayValue: `${formatInteger(overall)} ${overall === 1 ? 'message' : 'messages'}`,
 		url: url,
-		tooltip: `Messages on ${formatDate(new Date(day))}: ${overall}`
+		tooltip: `Messages on ${formatDate(new Date(day))}: ${formatInteger(overall)}`
 	};
 }
