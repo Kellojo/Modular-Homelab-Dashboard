@@ -29,14 +29,43 @@ export default class GotifyApiClient {
 		return (await response.json()) as GotifyClient[];
 	}
 
-	async getMessages(since?: number): Promise<GotifyMessageResponse> {
-		let apiUrl = await this.getApiUrl('/message');
-		if (since !== undefined) {
-			apiUrl += `?since=${since}`;
-		}
-		const response = await this.authenticatedFetch(apiUrl);
-		const data: GotifyMessageResponse = await response.json();
-		return data;
+	async getAllMessages(since?: Date): Promise<GotifyMessage[]> {
+		const messages: GotifyMessage[] = [];
+		let nextCursor: number | null = null;
+		let shouldContinue = true;
+
+		do {
+			let apiUrl = await this.getApiUrl('/message');
+			if (nextCursor) {
+				apiUrl += `?since=${nextCursor}`;
+			}
+
+			const response = await this.authenticatedFetch(apiUrl);
+			const data: GotifyMessageResponse = await response.json();
+
+			if (since) {
+				const filteredMessages: GotifyMessage[] = [];
+
+				for (const message of data.messages) {
+					const messageDate = new Date(message.date);
+
+					if (messageDate >= since) {
+						filteredMessages.push(message);
+					} else {
+						shouldContinue = false;
+						break;
+					}
+				}
+
+				messages.push(...filteredMessages);
+			} else {
+				messages.push(...data.messages);
+			}
+
+			nextCursor = data.paging && shouldContinue ? data.paging.since : null;
+		} while (nextCursor);
+
+		return messages;
 	}
 
 	async authenticatedFetch(url: string, options: RequestInit = {}): Promise<Response> {

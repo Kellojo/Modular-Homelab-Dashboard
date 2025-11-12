@@ -1,4 +1,4 @@
-import { getDateDaysAgo } from '$lib/common/Date';
+import { formatDate, getDateDaysAgo } from '$lib/common/Date';
 import { formatInteger } from '$lib/common/Formatter';
 import { createPassThroughHistoryEndpoint } from '$lib/server/PassThroughWidgetDataEndpoint';
 import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
@@ -76,7 +76,7 @@ function getWidgetValue(executions: N8nExecution[], day: string): FillDataWidget
 		}
 	}
 
-	let tooltip = `Executions on ${new Date(day).toLocaleDateString()}:\n`;
+	let tooltip = `Executions on ${formatDate(new Date(day))}:\n`;
 	tooltip += `Overall: ${formatInteger(overall)}\n`;
 	if (successful > 0) tooltip += `Successful: ${formatInteger(successful)}\n`;
 	if (erroneous > 0) tooltip += `Errors: ${formatInteger(erroneous)}\n`;

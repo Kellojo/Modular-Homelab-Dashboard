@@ -1,3 +1,8 @@
+
+export function formatDate(date: Date): string {
+	return date.toLocaleDateString();
+}
+
 export function getDateDaysAgo(days: number): Date {
 	const date = new Date();
 	date.setDate(date.getDate() - days);

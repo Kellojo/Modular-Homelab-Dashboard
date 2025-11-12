@@ -1,37 +1,56 @@
-import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
-import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
+import { formatDate, getDateDaysAgo } from '$lib/common/Date';
+import { createPassThroughHistoryEndpoint } from '$lib/server/PassThroughWidgetDataEndpoint';
+import type { DataWidgetResponse, FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
-import GotifyApiClient from '../../GotifyClient';
+import GotifyClient, { type GotifyMessage } from '../../GotifyClient';
 
-let lastMessageCount: number = 0;
+export const GET = createPassThroughHistoryEndpoint('gotify/messages/new', async (url) => {
+	const sinceDays = url.searchParams.get('since');
 
-export const GET = createWidgetEndpoint(
-	'gotify/messages/new',
-	async (url: URL): Promise<FillDataWidgetValue> => {
-		const addToHistory: boolean = url.searchParams.get('addToHistory') === 'true';
+	const since = getDateDaysAgo(Number(sinceDays) || 14);
+	const gotifyClient = new GotifyClient();
+	const gotifyUrl = (await gotifyClient.getGotifyUrl()) || '';
+	const executions = await gotifyClient.getAllMessages(since);
 
-		const gotifyClient = new GotifyApiClient();
-		const response = await gotifyClient.getMessages();
-		const overallMessageCount = response.paging.size;
-		let messageCount = overallMessageCount - lastMessageCount;
-		if (messageCount < 0) messageCount = 0;
+	// aggregate executions by day
+	const messagesByDay = new Map<string, GotifyMessage[]>();
+	for (let execution of executions) {
+		const date = new Date(execution.date);
+		const dateString = date.toISOString().split('T')[0];
 
-		if (addToHistory) {
-			lastMessageCount = overallMessageCount;
+		if (!messagesByDay.has(dateString)) {
+			messagesByDay.set(dateString, []);
 		}
 
-		let text = `${messageCount} ${messageCount === 1 ? 'message' : 'messages'}`;
-		if (messageCount === 0) {
-			text = 'No messages found';
-		}
-
-		return {
-			value: messageCount,
-			classification: messageCount > 0 ? ValueState.Success : ValueState.Info,
-			unit: 'Messages',
-			displayValue: text,
-			url: (await gotifyClient.getGotifyUrl()) || '',
-			tooltip: `${messageCount} messages sent through Gotify`
-		};
+		messagesByDay.get(dateString)!.push(execution);
 	}
-);
+
+	const current = getWidgetValue(executions, 'Overall', gotifyUrl);
+
+	const history: { timestamp: Date; value: FillDataWidgetValue }[] = [];
+	messagesByDay.keys().forEach((sKey) => {
+		history.push({
+			timestamp: new Date(sKey),
+			value: getWidgetValue(messagesByDay.get(sKey) || [], sKey, gotifyUrl)
+		});
+	});
+
+	const response: DataWidgetResponse<FillDataWidgetValue> = {
+		current: current,
+		history: history.reverse()
+	};
+
+	return response;
+});
+
+function getWidgetValue(messages: GotifyMessage[], day: string, url: string): FillDataWidgetValue {
+	const overall = messages.length;
+	return {
+		value: overall,
+		classification: overall > 0 ? ValueState.Success : ValueState.Unknown,
+		unit: 'Messages',
+		displayValue: `${overall} ${overall === 1 ? 'message' : 'messages'}`,
+		url: url,
+		tooltip: `Messages on ${formatDate(new Date(day))}: ${overall}`
+	};
+}

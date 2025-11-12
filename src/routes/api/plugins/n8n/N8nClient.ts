@@ -17,12 +17,6 @@ export default class N8nClient {
 		return url.toString();
 	}
 
-	async getExecutions(): Promise<N8nListResponse<N8nExecution>[]> {
-		const apiUrl = await this.getApiUrl('api/v1/executions');
-		const response = await this.authenticatedFetch(apiUrl);
-		return await response.json();
-	}
-
 	async getAllExecutions(since?: Date): Promise<N8nExecution[]> {
 		const executions: N8nExecution[] = [];
 		let nextCursor: string | null = null;
