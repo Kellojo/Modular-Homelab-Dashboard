@@ -23,11 +23,19 @@ export default async function getConfig(): Promise<Config> {
 		try {
 			const config: Config = yaml.parse(data);
 			if (!config.plugins)
-				config.plugins = { uptimekuma: {}, pihole: {}, gitea: {}, gotify: {}, n8n: {} };
+				config.plugins = {
+					uptimekuma: {},
+					pihole: {},
+					gitea: {},
+					gotify: {},
+					n8n: {},
+					homeassistant: {}
+				};
 			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
 			if (!config.plugins.pihole) config.plugins.pihole = {};
 			if (!config.plugins.gotify) config.plugins.gotify = {};
 			if (!config.plugins.n8n) config.plugins.n8n = {};
+			if (!config.plugins.homeassistant) config.plugins.homeassistant = {};
 
 			if (!config.widgets) config.widgets = [];
 			if (!config.config) config.config = { historyLength: 120, refreshCron: '*/5 * * * *' };
@@ -74,6 +82,9 @@ interface Config {
 			url?: string;
 		};
 		gotify: {
+			url?: string;
+		};
+		homeassistant: {
 			url?: string;
 		};
 		n8n: {
