@@ -15,12 +15,14 @@ const historyStore = new Map<string, { timestamp: Date; value: FillDataWidgetVal
  * Create a reusable SvelteKit endpoint with caching & history
  */
 export function createWidgetEndpoint(
-	name: string,
+	name: string | (() => string),
 	fetchFn: WidgetFetchFn,
 	options: StandardWidgetDataEndpointOptions = new StandardWidgetDataEndpointOptions()
 ): RequestHandler {
-	if (!historyStore.has(name)) {
-		historyStore.set(name, []);
+	const resolvedName = typeof name === 'function' ? name() : name;
+
+	if (!historyStore.has(resolvedName)) {
+		historyStore.set(resolvedName, []);
 	}
 
 	return async ({ url }) => {
@@ -30,9 +32,9 @@ export function createWidgetEndpoint(
 			const current = await fetchFn(url);
 
 			if (addToHistory) {
-				addHistoryEntry(name, options, current);
+				addHistoryEntry(resolvedName, options, current);
 			}
-			const history = historyStore.get(name)!;
+			const history = historyStore.get(resolvedName)!;
 			const response: DataWidgetResponse<FillDataWidgetValue> = {
 				current,
 				history
@@ -40,7 +42,7 @@ export function createWidgetEndpoint(
 
 			return json(response);
 		} catch (err: any) {
-			logError(`Error in widget ${name}: ${err}`, 'WIDGET');
+			logError(`Error in widget ${resolvedName}: ${err}`, 'WIDGET');
 			return json({ error: err.message }, { status: 500 });
 		}
 	};
