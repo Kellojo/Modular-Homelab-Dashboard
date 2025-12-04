@@ -44,8 +44,11 @@ async function refreshMetric(widget: WidgetData) {
 	performance.mark(startMark);
 
 	try {
-		const path = getFullWidgetDataUrl(widget);
-		await fetch(path + '?addToHistory=true');
+		const dataUrl = getFullWidgetDataUrl(widget);
+		const url = new URL(dataUrl);
+		logInfo(`Refreshing widget ${dataPoint} at ${url}`, 'CRON');
+		url.searchParams.set('addToHistory', 'true');
+		await fetch(url);
 	} catch (err) {
 		logError(`Error refreshing widget ${dataPoint}: ${err}`, 'CRON');
 	}

@@ -92,6 +92,24 @@
 		scrollbar-color: transparent transparent;
 		transition: scrollbar-color 0.2s;
 		scrollbar-width: none;
+
+		padding-top: 0.25rem;
+		padding-bottom: 0.25rem;
+
+		mask-image: linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 0.5rem,
+			black calc(100% - 0.25rem),
+			transparent 100%
+		);
+		-webkit-mask-image: linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 0.5rem,
+			black calc(100% - 0.25rem),
+			transparent 100%
+		);
 	}
 
 	.enableContentScrolling:hover {
