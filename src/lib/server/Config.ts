@@ -111,6 +111,7 @@ export interface WidgetData {
 	subtitle?: string;
 	datasource?: string;
 	datapoint?: string;
+	datafilters?: Record<string, string | number | boolean>;
 }
 
 export enum WidgetType {

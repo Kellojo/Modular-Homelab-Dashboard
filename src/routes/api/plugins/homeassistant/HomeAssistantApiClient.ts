@@ -23,6 +23,23 @@ export default class HomeAssistantApiClient {
 		return (await response.json()) as HomeAssistantStateResponse;
 	}
 
+	async getTemplateResult(template: string): Promise<string> {
+		const apiUrl = await this.getApiUrl(`/api/template`);
+		const response = await this.authenticatedFetch(apiUrl, {
+			method: 'POST',
+			body: JSON.stringify({ template }),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		const result = await response.text();
+		return result;
+	}
+
+	async getAreaOfEntity(entityId: string): Promise<string | null> {
+		return this.getTemplateResult(`{{ area_name('${entityId}') }}`);
+	}
+
 	async authenticatedFetch(url: string, options: RequestInit = {}): Promise<Response> {
 		const token = env.HOME_ASSISTANT_TOKEN;
 		if (!token) throw new Error('HOME_ASSISTANT_TOKEN is not set');
@@ -41,6 +58,10 @@ export default class HomeAssistantApiClient {
 
 		return response;
 	}
+}
+
+export function getEntityId(url: URL): string {
+	return url.searchParams.get('entity_id') || '';
 }
 
 export interface HomeAssistantStateResponse {

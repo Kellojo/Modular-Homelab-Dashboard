@@ -23,7 +23,7 @@ export function getFullWidgetDataUrl(widget: WidgetData): string {
 	if (widget.datasource === undefined || widget.datapoint === undefined) {
 		throw new Error('Widget datasource or datapoint is undefined');
 	}
-	const path = getWidgetDataUrl(widget.datasource, widget.datapoint);
+	const path = getWidgetDataUrl(widget.datasource, widget.datapoint, widget.datafilters);
 
 	const port = process.env.PORT || (process.env.NODE_ENV === 'development' ? 5173 : 3000);
 
