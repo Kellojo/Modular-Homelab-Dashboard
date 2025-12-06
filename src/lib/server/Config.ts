@@ -69,6 +69,7 @@ interface Config {
 	config: {
 		historyLength: number;
 		refreshCron: string;
+		disableSeasonalEvents?: boolean;
 
 		background?: {
 			url: string;

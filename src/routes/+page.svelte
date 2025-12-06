@@ -13,6 +13,8 @@
 	import StatusListDataWidget from '$lib/components/datawidgets/StatusListDataWidget.svelte';
 	import DashboardInfo from '$lib/components/DashboardInfo.svelte';
 	import HeatmapDataWidget from '$lib/components/datawidgets/HeatmapDataWidget.svelte';
+	import applySeasonalEvents from '$lib/common/SeasonalEvents';
+	import { onMount } from 'svelte';
 	const { data } = $props();
 
 	const components = {
@@ -36,6 +38,10 @@
 		}
 		return components[widget.type] || null;
 	}
+
+	onMount(() => {
+		if (!data.config.disableSeasonalEvents) applySeasonalEvents();
+	});
 </script>
 
 <Background
