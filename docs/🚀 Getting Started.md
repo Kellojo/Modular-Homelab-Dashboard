@@ -24,6 +24,7 @@ services:
 config:
   historyLength: 100
   refreshCron: "*/5 * * * * *"
+  disableSeasonalEvents: false
   background:
     url: ./background.jpg
     blur: 0.5rem
