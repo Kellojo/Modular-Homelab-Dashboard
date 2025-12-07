@@ -9,21 +9,18 @@ widgets:
   - type: datawidget
     subtype: statushistory
     title: CPU
-    static: false
     datasource: system
     datapoint: cpu.load
 
   - type: datawidget
     subtype: line
     title: CPU
-    static: false
     datasource: system
     datapoint: cpu.load
 
   - type: datawidget
     subtype: fill
     title: CPU
-    static: false
     datasource: system
     datapoint: cpu.load
     width: 2
@@ -31,21 +28,18 @@ widgets:
   - type: datawidget
     subtype: fill
     title: CPU
-    static: false
     datasource: system
     datapoint: cpu.currentSpeed
 
   - type: datawidget
     subtype: fill
     title: CPU
-    static: false
     datasource: system
     datapoint: cpu.temperature
 
   - type: datawidget
     subtype: fill
     title: RAM
-    static: false
     datasource: system
     datapoint: memory
     width: 2
@@ -53,7 +47,6 @@ widgets:
   - type: datawidget
     subtype: fill
     title: Disk
-    static: false
     datasource: system
     datapoint: disk
     width: 2
@@ -61,7 +54,6 @@ widgets:
   - type: datawidget
     subtype: text
     title: Traffic
-    static: false
     datasource: system
     datapoint: network.traffic
     width: 1
@@ -69,7 +61,6 @@ widgets:
   - type: datawidget
     subtype: text
     title: Up
-    static: false
     datasource: system
     datapoint: network.totalUp
     width: 1
@@ -77,7 +68,6 @@ widgets:
   - type: datawidget
     subtype: text
     title: Down
-    static: false
     datasource: system
     datapoint: network.totalDown
     width: 1
@@ -88,7 +78,6 @@ widgets:
   - type: datawidget
     subtype: statushistory
     title: Status
-    static: false
     datasource: uptimekuma
     datapoint: uptime
 
@@ -98,6 +87,5 @@ widgets:
   - type: datawidget
     subtype: statushistory
     title: Status
-    static: false
     datasource: pihole
     datapoint: blocked.percentage
