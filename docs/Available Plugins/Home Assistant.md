@@ -20,17 +20,25 @@ environment:
 ```
 
 ## Data Points
+
+- `summary` - Return a summary of the Home Assistant instance, including number of devices and entities
 - `state` - Return the current state of an entity
 
 ## Example Configuration
 
 ```yaml
 widgets:
+  # Show number of devices and entities in Home Assistant
+  - type: datawidget
+    subtype: text
+    title: Home Assistant
+    datasource: homeassistant
+    datapoint: summary
+
   # Show current TV power consumption
   - type: datawidget
     subtype: bar
     title: TV Power Consumption
-    static: false
     datasource: homeassistant
     datapoint: state
     datafilters:
@@ -41,7 +49,6 @@ widgets:
   - type: datawidget
     subtype: bar
     title: Staubsauger Steckdose
-    static: false
     datasource: homeassistant
     datapoint: state
     datafilters:
