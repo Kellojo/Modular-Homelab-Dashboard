@@ -4,7 +4,7 @@ on:
   push:
     #workflow_dispatch:
     #branches: ["main"]
-    tags: ["v*"]  # Optional: publish on version tags too
+    tags: ['v*'] # Optional: publish on version tags too
 
 jobs:
   build:
@@ -12,8 +12,8 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # Required for GHCR publishing
-      id-token: write  # Needed for OIDC authentication (no PAT needed)
+      packages: write # Required for GHCR publishing
+      id-token: write # Needed for OIDC authentication (no PAT needed)
 
     steps:
       - name: Checkout repository
