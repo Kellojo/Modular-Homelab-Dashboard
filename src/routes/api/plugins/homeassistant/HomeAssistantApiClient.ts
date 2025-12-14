@@ -121,20 +121,18 @@ export default class HomeAssistantApiClient {
 
 					if (msg.type === 'auth_invalid') {
 						ws.close();
-						reject(
-							new Error('Home Assistant Authentication failed: ' + (msg.message || 'Invalid token'))
-						);
+						reject(new Error('Home Assistant Authentication failed: Invalid token'));
 					}
 				} catch (error) {
 					logError('Error parsing WebSocket message:' + error, 'HomeAssistantApiClient');
-					reject(new Error('Failed to parse WebSocket message: ' + error));
 					ws.close();
+					reject(new Error('Failed to parse WebSocket message: ' + error));
 				}
 			};
+
 			ws.onerror = (error) => {
 				logError('WebSocket error:' + error, 'HomeAssistantApiClient');
 				reject(error);
-				ws.close();
 			};
 
 			ws.onclose = (event) => {
