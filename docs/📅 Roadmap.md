@@ -13,7 +13,10 @@ There are a few ideas an planned features, that might be implemented in the futu
 
 - Weather plugin/widget
 - Time plugin/widget
-- n8n integration
-- Homebridge integration
 - Extended Gitea plugin to support monitoring individual repositories, actions, and more
 - Extended Uptime Kuma plugin to support monitoring individual services
+- GitHub plugin/widget to i.e. show stats of repositories or user profile information
+- Additional seasonal events:
+    - Meteor showers during the night
+    - Starry night sky with twinkling stars
+    - Falling leaves during autumn
