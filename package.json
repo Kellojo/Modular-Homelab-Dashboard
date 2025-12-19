@@ -42,11 +42,12 @@
 		"let-it-go": "^1.1.0",
 		"moment": "^2.30.1",
 		"node-cron": "^4.2.1",
+		"octokit": "^5.0.5",
 		"signale": "^1.4.0",
 		"systeminformation": "^5.27.11",
 		"yaml": "^2.8.1"
 	},
-    "overrides": {
-        "cookie": "^1.1.1"
-    }
+	"overrides": {
+		"cookie": "^1.1.1"
+	}
 }
