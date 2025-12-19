@@ -13,6 +13,8 @@ services:
     container_name: modular-homelab-dashboard
     restart: unless-stopped
     pid: "host"
+    ports:
+      - 3000:3000 # change if needed (i.e. 3001:3000)
     volumes:
       - ./config.yaml:/app/dashboard.yaml:ro # your dashboard config
       - ./background.jpg:/app/build/client/background.jpg:ro # optional custom background
