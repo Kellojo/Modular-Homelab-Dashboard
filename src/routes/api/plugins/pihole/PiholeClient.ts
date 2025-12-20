@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private';
-import { logInfo, logSuccess } from '$lib/common/Logger';
+import { logError, logInfo, logSuccess } from '$lib/common/Logger';
 import getConfig from '$lib/server/Config';
 
 let sid: string | null = null;

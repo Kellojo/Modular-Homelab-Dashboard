@@ -17,7 +17,7 @@
 	import { onMount } from 'svelte';
 	const { data } = $props();
 
-	const components = {
+	const components: Record<string, any> = {
 		title: WidgetTitle,
 		link: LinkWidget,
 		datawidget: {
@@ -32,9 +32,10 @@
 		}
 	};
 
-	function getComponent(widget: WidgetData) {
+	function getComponent(widget: WidgetData): any {
 		if (widget.type === 'datawidget' && widget.subtype) {
-			return components[widget.type][widget.subtype] || null;
+			const group = components['datawidget'] as Record<string, any>;
+			return group[widget.subtype] || null;
 		}
 		return components[widget.type] || null;
 	}

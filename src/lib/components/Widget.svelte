@@ -6,9 +6,9 @@
 		subtitle = '',
 		width = 1,
 		height = 1,
-		content,
+		content = null,
 		url = '',
-		icon,
+		icon = '',
 		iconify = '',
 		enableContentScrolling = false,
 		disableBottomPadding = false,
@@ -161,6 +161,7 @@
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
+        line-clamp: 2;
 		overflow: hidden;
 
 		text-shadow: 0 0 2px var(--backgroundTextContrastShadow);
