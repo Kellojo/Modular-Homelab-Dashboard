@@ -59,7 +59,7 @@
 				{#each week.days as day}
 					<div
 						class={['day', day.value?.classification]}
-						style={`opacity: ${day.value?.value / max};`}
+						style={`opacity: ${(day.value?.value as number) / max};`}
 						title={formatValueTooltip(day.value, day.date)}
 					></div>
 				{/each}
