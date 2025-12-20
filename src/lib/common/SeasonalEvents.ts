@@ -20,7 +20,7 @@ export default async function applySeasonalEvents() {
 export async function activateWinterEvents() {
 	const { LetItGo } = await import('let-it-go');
 
-	console.log('Winter seaso activated!');
+	console.log('Winter seasonal event activated!');
 	console.log(document.body);
 	const letItGo = new LetItGo({
 		root: document.body,

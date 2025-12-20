@@ -12,11 +12,18 @@
 		...props
 	} = $props();
 	let url = $state(props.url || '');
+	let initiallyLoaded = $state(false);
 
 	$effect(() => {
 		let active = true;
 		async function poll() {
 			while (active) {
+				if (document.hidden && initiallyLoaded) {
+					await new Promise((resolve) => setTimeout(resolve, 1000));
+					continue;
+				}
+				initiallyLoaded = true;
+
 				try {
 					const response = await fetch(getWidgetDataUrl(datasource, datapoint, datafilters));
 					if (!response.ok) throw new Error('Network response was not ok');
