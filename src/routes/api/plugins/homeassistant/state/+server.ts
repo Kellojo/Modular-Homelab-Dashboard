@@ -1,6 +1,8 @@
+import { formatFloat, formatInteger } from '$lib/common/Formatter';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
+import { format } from 'path';
 import HomeAssistantApiClient, { getEntityId } from '../HomeAssistantApiClient';
 
 export const GET = createWidgetEndpoint(
@@ -15,8 +17,10 @@ export const GET = createWidgetEndpoint(
 		const state = await homeAssistantClient.getState(entityId);
 		const area = (await homeAssistantClient.getAreaOfEntity(entityId)) || 'N/A';
 
-		let value = `${state.state}`;
-		let unit = state.attributes.unit_of_measurement || '';
+		const deviceClass = state.attributes?.device_class || '';
+		let unit = state.attributes?.unit_of_measurement || '';
+		let value = formatState(state.state, unit, deviceClass);
+
 		if (!state) {
 			value = 'No state found';
 			unit = null;
@@ -33,3 +37,30 @@ export const GET = createWidgetEndpoint(
 		};
 	}
 );
+
+function formatState(state: string, unitOfMeasurement: string, deviceClass: string): string {
+	if (deviceClass === 'timestamp') {
+		const date = new Date(state);
+		return date.toLocaleString();
+	}
+
+	const floatVal = parseFloat(state);
+	const intVal = parseInt(state, 10);
+	switch (unitOfMeasurement) {
+		case '%':
+			if (!isNaN(floatVal)) return formatFloat(floatVal, 0);
+			break;
+
+		case '°C':
+		case '°F':
+			if (!isNaN(floatVal)) return formatFloat(floatVal, 1);
+			break;
+
+		default:
+			if (!isNaN(floatVal)) return formatFloat(floatVal);
+			if (!isNaN(intVal)) return formatInteger(intVal);
+			break;
+	}
+
+	return state;
+}

@@ -21,6 +21,10 @@ export function formatInteger(value: number): string {
 	return `${sign}${rounded}${units[unitIndex]}`;
 }
 
+export function formatFloat(value: number, decimals: number = 2): string {
+	return value.toFixed(decimals);
+}
+
 export function formatTimeAgo(date: Date | string): string {
 	const m = moment(date);
 	m.fromNow();
