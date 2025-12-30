@@ -29,13 +29,16 @@ export default async function getConfig(): Promise<Config> {
 					gitea: {},
 					gotify: {},
 					n8n: {},
-					homeassistant: {}
+					homeassistant: {},
+					karakeep: {}
 				};
 			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
 			if (!config.plugins.pihole) config.plugins.pihole = {};
 			if (!config.plugins.gotify) config.plugins.gotify = {};
 			if (!config.plugins.n8n) config.plugins.n8n = {};
 			if (!config.plugins.homeassistant) config.plugins.homeassistant = {};
+			if (!config.plugins.karakeep) config.plugins.karakeep = {};
+			if (!config.plugins.gitea) config.plugins.gitea = {};
 
 			if (!config.widgets) config.widgets = [];
 			if (!config.config) config.config = { historyLength: 120, refreshCron: '*/5 * * * *' };
@@ -86,6 +89,9 @@ interface Config {
 			url?: string;
 		};
 		homeassistant: {
+			url?: string;
+		};
+		karakeep: {
 			url?: string;
 		};
 		n8n: {
