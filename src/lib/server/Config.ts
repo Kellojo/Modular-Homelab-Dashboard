@@ -44,6 +44,8 @@ export default async function getConfig(): Promise<Config> {
 			if (!config.config) config.config = { historyLength: 120, refreshCron: '*/5 * * * *' };
 			if (!config.config.historyLength) config.config.historyLength = 120;
 			if (!config.config.refreshCron) config.config.refreshCron = '*/5 * * * *';
+			if (config.config.disableSessionExpirationCheck === undefined)
+				config.config.disableSessionExpirationCheck = false;
 
 			cachedConfig = config;
 			configFilePath = configPath;
@@ -73,6 +75,7 @@ interface Config {
 		historyLength: number;
 		refreshCron: string;
 		disableSeasonalEvents?: boolean;
+		disableSessionExpirationCheck?: boolean;
 
 		background?: {
 			url: string;
