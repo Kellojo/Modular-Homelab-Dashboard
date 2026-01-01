@@ -4,6 +4,7 @@ export async function monitorSessionValidity(): Promise<void> {
 	console.log('Starting session validity monitoring');
 	validateSession();
 	setInterval(validateSession, 60000);
+    addEventListener('visibilitychange', validateSession);
 }
 
 async function validateSession() {
