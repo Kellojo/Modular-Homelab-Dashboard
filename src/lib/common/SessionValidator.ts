@@ -19,7 +19,9 @@ async function validateSession() {
 
 export async function isSessionValid(): Promise<boolean> {
 	try {
-		const response = await fetch('/api/health');
+		const response = await fetch('/api/health', {
+            redirect: 'manual',
+        });
 
 		if (!response.ok || SESSION_EXPIRED_RESPONSE_CODES.includes(response.status)) {
 			return false;
