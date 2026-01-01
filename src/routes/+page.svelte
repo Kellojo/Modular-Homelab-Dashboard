@@ -15,6 +15,7 @@
 	import HeatmapDataWidget from '$lib/components/datawidgets/HeatmapDataWidget.svelte';
 	import applySeasonalEvents from '$lib/common/SeasonalEvents';
 	import { onMount } from 'svelte';
+	import { monitorSessionValidity } from '$lib/common/SessionValidator.js';
 	const { data } = $props();
 
 	const components: Record<string, any> = {
@@ -42,6 +43,8 @@
 
 	onMount(() => {
 		if (!data.config.disableSeasonalEvents) applySeasonalEvents();
+
+		if (!data.config.disableSessionExpirationCheck) monitorSessionValidity();
 	});
 </script>
 
