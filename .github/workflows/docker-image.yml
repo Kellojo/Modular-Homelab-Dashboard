@@ -38,19 +38,6 @@ jobs:
           echo "Updated package.json to version $VERSION"
           cat package.json | grep version
 
-      - name: Login to Docker Hub (required for Docker Hardened Images)
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN_IMAGE_READ_ONLY }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: false
-          pull: true
-
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -69,6 +56,5 @@ jobs:
         with:
           context: .
           push: true
-          pull: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
