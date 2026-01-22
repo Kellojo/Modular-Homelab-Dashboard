@@ -2,7 +2,7 @@ name: Build and Publish Docker Image
 
 on:
   push:
-    #workflow_dispatch:
+    workflow_dispatch:
     #branches: ["main"]
     tags: ['v*'] # Optional: publish on version tags too
 
