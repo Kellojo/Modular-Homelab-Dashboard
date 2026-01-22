@@ -21,7 +21,15 @@
 		if (props.maxValue !== undefined) {
 			maxValue = props.maxValue;
 		} else {
-			maxValue = Math.max(...history.map((entry) => entry.value.value as number));
+			maxValue = Math.max(
+				...history.map((entry) => {
+					if (entry.value.max !== undefined) {
+						return entry.value.max as number;
+					}
+
+					return entry.value.value as number;
+				})
+			);
 		}
 	}
 </script>

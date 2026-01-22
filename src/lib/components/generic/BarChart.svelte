@@ -8,17 +8,29 @@
 		maxHeight = '100%',
 		entries = $bindable([] as { timestamp: Date; value: FillDataWidgetValue }[])
 	} = $props();
+
+	function getBarHeight(value: number | string): string {
+		if (typeof value === 'string') {
+			value = parseFloat(value);
+		}
+
+		const heightPercent = ((value - minValue) / (maxValue - minValue)) * 100;
+		return `${heightPercent}%`;
+	}
 </script>
 
 <div class="barchart">
 	{#each entries as entry, i}
 		<div class="entry">
-			<div
-				style="height: {(((entry.value.value as number) - minValue) / (maxValue - minValue)) *
-					100}%; max-height: {maxHeight};"
-				class={['bar', entry.value.classification]}
-				title={entry.value.tooltip}
-			></div>
+			<div style="height: calc(100% - 1rem); display: flex; align-items: flex-end;">
+				<div
+					style="height: {getBarHeight(
+						entry.value.value as number
+					)}; max-height: {maxHeight}; width: 100%;"
+					class={['bar', entry.value.classification]}
+					title={entry.value.tooltip}
+				></div>
+			</div>
 
 			<div class="bar-label">
 				{#if i % 10 === 0}{formatTime(entry.timestamp)}{/if}
