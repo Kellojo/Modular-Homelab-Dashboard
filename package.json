@@ -43,7 +43,7 @@
 		"node-cron": "^4.2.1",
 		"signale": "^1.4.0",
 		"systeminformation": "^5.31.1",
-		"yaml": "^2.8.1"
+		"yaml": "^2.8.3"
 	},
 	"overrides": {
 		"cookie": "^1.1.1"
