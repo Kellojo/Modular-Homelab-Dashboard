@@ -23,7 +23,7 @@
 		"@iconify/svelte": "^5.0.2",
 		"@sveltejs/adapter-node": "^5.4.0",
 		"@sveltejs/kit": "^2.53.4",
-		"@sveltejs/vite-plugin-svelte": "^6.2.0",
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@types/d3": "^7.4.3",
 		"@types/node": "^24.7.1",
 		"@types/signale": "^1.4.7",
@@ -32,7 +32,7 @@
 		"svelte": "^5.53.6",
 		"svelte-check": "^4.3.2",
 		"typescript": "^5.9.2",
-		"vite": "^7.3.2"
+		"vite": "^8.0.16"
 	},
 	"dependencies": {
 		"@types/node-cron": "^3.0.11",
