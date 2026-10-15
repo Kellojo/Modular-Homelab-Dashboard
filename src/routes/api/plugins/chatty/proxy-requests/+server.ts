@@ -1,3 +1,4 @@
+import { formatInteger } from '$lib/common/Formatter';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
@@ -14,9 +15,9 @@ export const GET = createWidgetEndpoint(
 			value: count,
 			classification: ValueState.Info,
 			unit: 'Requests',
-			displayValue: `${count.toLocaleString()} ${count === 1 ? 'request' : 'requests'}`,
+			displayValue: `${formatInteger(count)} ${count === 1 ? 'request' : 'requests'}`,
 			url: (await chattyClient.getChattyUrl()) || '',
-			tooltip: `Total proxy requests: ${count}`
+			tooltip: `Total proxy requests: ${formatInteger(count)}`
 		};
 	}
 );

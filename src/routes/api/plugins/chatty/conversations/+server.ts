@@ -1,3 +1,4 @@
+import { formatInteger } from '$lib/common/Formatter';
 import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
@@ -14,9 +15,9 @@ export const GET = createWidgetEndpoint(
 			value: count,
 			classification: count > 0 ? ValueState.Success : ValueState.Unknown,
 			unit: 'Conversations',
-			displayValue: `${count.toLocaleString()} ${count === 1 ? 'conversation' : 'conversations'}`,
+			displayValue: `${formatInteger(count)} ${count === 1 ? 'conversation' : 'conversations'}`,
 			url: (await chattyClient.getChattyUrl()) || '',
-			tooltip: `Total conversations: ${count}`
+			tooltip: `Total conversations: ${formatInteger(count)}`
 		};
 	}
 );
