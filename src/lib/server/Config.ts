@@ -30,7 +30,8 @@ export default async function getConfig(): Promise<Config> {
 					gotify: {},
 					n8n: {},
 					homeassistant: {},
-					karakeep: {}
+					karakeep: {},
+					chatty: {}
 				};
 			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
 			if (!config.plugins.pihole) config.plugins.pihole = {};
@@ -39,6 +40,7 @@ export default async function getConfig(): Promise<Config> {
 			if (!config.plugins.homeassistant) config.plugins.homeassistant = {};
 			if (!config.plugins.karakeep) config.plugins.karakeep = {};
 			if (!config.plugins.gitea) config.plugins.gitea = {};
+			if (!config.plugins.chatty) config.plugins.chatty = {};
 
 			if (!config.widgets) config.widgets = [];
 			if (!config.config) config.config = { historyLength: 120, refreshCron: '*/5 * * * *' };
@@ -105,6 +107,9 @@ interface Config {
 			statusPage?: string;
 		};
 		pihole: {
+			url?: string;
+		};
+		chatty: {
 			url?: string;
 		};
 	};
