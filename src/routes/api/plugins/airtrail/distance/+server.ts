@@ -3,7 +3,7 @@ import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
 import AirtrailClient from '../AirtrailClient';
-import { aggregateForCurrentYear, formatCombined, yearPlusAllTooltip } from '../helpers';
+import { aggregateForCurrentYear, estimateDistanceForYear, formatCombined, yearPlusAllTooltip } from '../helpers';
 
 export const GET = createWidgetEndpoint(
 	'airtrail/distance',
@@ -13,7 +13,7 @@ export const GET = createWidgetEndpoint(
 		const overall = stats.distanceKm;
 
 		const flights = await client.getAllFlights();
-		const { thisYear } = aggregateForCurrentYear(flights);
+		const { thisYear, overall: overallFlights } = aggregateForCurrentYear(flights);
 
 		if (stats.flights === 0 || overall === 0) {
 			return {
@@ -26,8 +26,7 @@ export const GET = createWidgetEndpoint(
 			};
 		}
 
-		const averageKm = overall / stats.flights;
-		const thisYearDistance = Math.round(thisYear * averageKm);
+		const thisYearDistance = estimateDistanceForYear(thisYear, overallFlights, overall);
 
 		return {
 			value: thisYearDistance,

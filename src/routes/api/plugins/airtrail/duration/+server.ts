@@ -2,7 +2,7 @@ import { createWidgetEndpoint } from '$lib/server/StandardWidgetDataEndpoint';
 import type { FillDataWidgetValue } from '$lib/types/DataWidgetValueTypes';
 import { ValueState } from '$lib/types/valueState';
 import AirtrailClient from '../AirtrailClient';
-import { formatDuration, yearPlusAllTooltip } from '../helpers';
+import { formatCombinedDuration, formatDuration, yearPlusAllTooltip } from '../helpers';
 
 export const GET = createWidgetEndpoint(
 	'airtrail/duration',
@@ -37,10 +37,3 @@ export const GET = createWidgetEndpoint(
 		};
 	}
 );
-
-function formatCombinedDuration(thisYearSeconds: number, overallSeconds: number): string {
-	if (thisYearSeconds === overallSeconds) {
-		return formatDuration(overallSeconds);
-	}
-	return `${formatDuration(thisYearSeconds)} (${formatDuration(overallSeconds)} all time)`;
-}

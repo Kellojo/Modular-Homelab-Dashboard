@@ -45,6 +45,22 @@ export function formatCombined(yearly: number, overall: number, unit: string): s
 	return `${formatInteger(yearly)} ${unit} (${formatInteger(overall)} all time)`;
 }
 
+export function formatCombinedDuration(thisYearSeconds: number, overallSeconds: number): string {
+	if (thisYearSeconds === overallSeconds) {
+		return formatDuration(overallSeconds);
+	}
+	return `${formatDuration(thisYearSeconds)} (${formatDuration(overallSeconds)} all time)`;
+}
+
+export function estimateDistanceForYear(
+	thisYearFlights: number,
+	overallFlights: number,
+	overallDistanceKm: number
+): number {
+	if (overallFlights === 0) return 0;
+	return Math.round((overallDistanceKm / overallFlights) * thisYearFlights);
+}
+
 export function yearPlusAllTooltip(
 	label: string,
 	yearly: number,
