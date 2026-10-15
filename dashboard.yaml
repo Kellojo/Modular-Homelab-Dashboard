@@ -1,6 +1,8 @@
 plugins:
   uptimekuma:
     url: http://192.168.178.100:3000
+  airtrail:
+    url: https://your-airtrail-instance.example
 
 widgets:
   - type: title
@@ -89,3 +91,20 @@ widgets:
     title: Status
     datasource: pihole
     datapoint: blocked.percentage
+
+  - type: title
+    title: AirTrail
+
+  - type: datawidget
+    subtype: fill
+    title: Flights
+    datasource: airtrail
+    datapoint: flights.count
+    width: 1
+
+  - type: datawidget
+    subtype: fill
+    title: Distance
+    datasource: airtrail
+    datapoint: distance
+    width: 1

@@ -26,6 +26,7 @@ export default async function getConfig(): Promise<Config> {
 				config.plugins = {
 					uptimekuma: {},
 					pihole: {},
+					airtrail: {},
 					gitea: {},
 					gotify: {},
 					n8n: {},
@@ -35,6 +36,7 @@ export default async function getConfig(): Promise<Config> {
 				};
 			if (!config.plugins.uptimekuma) config.plugins.uptimekuma = {};
 			if (!config.plugins.pihole) config.plugins.pihole = {};
+			if (!config.plugins.airtrail) config.plugins.airtrail = {};
 			if (!config.plugins.gotify) config.plugins.gotify = {};
 			if (!config.plugins.n8n) config.plugins.n8n = {};
 			if (!config.plugins.homeassistant) config.plugins.homeassistant = {};
@@ -87,6 +89,9 @@ interface Config {
 	};
 
 	plugins: {
+		airtrail: {
+			url?: string;
+		};
 		gitea: {
 			url?: string;
 		};
